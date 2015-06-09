@@ -12,7 +12,7 @@ entity register_file is
            write_data_in : in  STD_LOGIC_VECTOR (31 downto 0);
            read_data1_out : out  STD_LOGIC_VECTOR (31 downto 0);
            read_data2_out : out  STD_LOGIC_VECTOR (31 downto 0);
-			  clk : in STD_LOGIC;
+			  clk_in : in STD_LOGIC;
 			  --Steuersignale
 			  reg_write_in : in STD_LOGIC);
 end register_file;
@@ -43,9 +43,9 @@ begin
 	end process;
 	
 
-	process (clk)
+	process (clk_in)
 	begin
-		if rising_edge(clk) then
+		if rising_edge(clk_in) then
 		
 			if (reg_write_in = '1') then															--synchrones Schreiben
 			  registers(to_integer(unsigned(write_address_in))) <= write_data_in;  	

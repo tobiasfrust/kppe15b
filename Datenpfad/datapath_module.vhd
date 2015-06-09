@@ -33,7 +33,8 @@ use work.all;
 
 entity datapath_module is
     Port (  --in
-				clk : in STD_LOGIC;
+				clk_in : in STD_LOGIC;
+				rst_in : in STD_LOGIC;
 				instruction_in : in  STD_LOGIC_VECTOR (31 downto 0);				--befehl aus befehlsspeicher
 				pc_inc_in : in  STD_LOGIC_VECTOR (31 downto 0);						--der um 4 erhöhte Befehlszähler
 				
@@ -52,7 +53,21 @@ entity datapath_module is
 			  
 			   --out
 			   instruction_out : out STD_LOGIC_VECTOR (31 downto 0);		   	--befehl, der ans Steuerwerk geht
-				pc_src : out STD_LOGIC);													--ausgang für den muxer vor dem program counter, der bei sprung die quelle auswählt
+				pc_src : out STD_LOGIC;													--ausgang für den muxer vor dem program counter, der bei sprung die quelle auswählt
+				
+				--############################################
+				--#	wishbone signale
+				--############################################				
+				--in wishbone bus			  
+			   wb_dat_in : in STD_LOGIC_VECTOR (31 downto 0);
+			   wb_ack_in : in STD_LOGIC;				
+				--out wishbone bus
+			   wb_adr_out		: out STD_LOGIC_VECTOR (31 downto 0);
+			   wb_dat_out		: out STD_LOGIC_VECTOR (31 downto 0);
+			   wb_we_out		: out STD_LOGIC;
+			   wb_sel_out 		: out STD_LOGIC_VECTOR (3 downto 0);	
+			   wb_strobe_out  	: out STD_LOGIC;					
+			   wb_cyc_out  		: out STD_LOGIC);
 end datapath_module;
 
 	----------------------------------------------------------------------------------------------------------
@@ -76,8 +91,8 @@ architecture Behavioral of datapath_module is
 	signal idex_read_data1_out : STD_LOGIC_VECTOR (31 downto 0);
 	signal idex_read_data2_out : STD_LOGIC_VECTOR (31 downto 0);
 	signal idex_sign_extended_out : STD_LOGIC_VECTOR (31 downto 0);
-	signal idex_write_address_rt_out : STD_LOGIC_VECTOR (31 downto 0);
-	signal idex_write_address_rd_out : STD_LOGIC_VECTOR (31 downto 0);
+	signal idex_write_address_rt_out : STD_LOGIC_VECTOR (4 downto 0);
+	signal idex_write_address_rd_out : STD_LOGIC_VECTOR (4 downto 0);
 	signal idex_program_counter_out : STD_LOGIC_VECTOR (31 downto 0);	
 	signal idex_reg_dst_ctrl_out : STD_LOGIC;											--out steuersignale (ex)	
 	signal idex_alu_src_out : STD_LOGIC;
@@ -118,6 +133,7 @@ architecture Behavioral of datapath_module is
 	
 	--data_storage output signals
 	signal data_storage_read_data_out : STD_LOGIC_VECTOR (31 downto 0);
+	signal pipeline_en : STD_LOGIC;			  
 	
 	--memwb output signals
 	signal memwb_read_data_out : STD_LOGIC_VECTOR (31 downto 0);
@@ -135,7 +151,7 @@ begin
 				  instruction_in => instruction_in,
 				  program_counter_out => ifid_pc_out,
 				  instruction_out => ifid_instruc_out,
-				  clk => clk);
+				  clk_in => clk_in);
 				  
 	regfile : entity work.register_file 												--regfile
    port map ( read_address1_in => ifid_instruc_out (25 downto 21),
@@ -144,7 +160,7 @@ begin
 				  write_data_in    => mem_to_reg_mux_out,
 				  read_data1_out   => read_data1_out,
 				  read_data2_out   => read_data2_out,
-				  clk              => clk,
+				  clk_in              => clk_in,
 				  --Steuersignale
 				  reg_write_in 	 => memwb_reg_write_out);	
 
@@ -153,7 +169,7 @@ begin
               imm_ext => sign_extended_out);
 				  
 	idex_reg : entity work.idex_pipeline_reg 											--idex pipeline reg
-   port map ( clk => clk,
+   port map ( clk_in => clk_in,
 				  --in
 				  read_data1_in => read_data1_out,
 				  read_data2_in => read_data2_out,
@@ -228,7 +244,7 @@ begin
 	
 	exmem_reg : entity work.exmem_pipeline_reg										--exmem pipeline reg
 	port map(--in
-				clk => clk,
+				clk_in => clk_in,
 				jump_addr_in => jump_addr_calc_out,
 				alu_zero_in  => alu_zero_out,
 				alu_result_in => alu_result_out,
@@ -263,6 +279,9 @@ begin
 				
 	data_storage : entity work.data_storage											--data storage (muss noch implementiert werden)
    port map ( --in
+				  clk_in => clk_in,
+				  rst_in => rst_in,
+	
 				  address_in => exmem_alu_result_out,
 				  write_data_in => exmem_write_data_out,
 				  --steuersignale
@@ -270,11 +289,26 @@ begin
 				  mem_write_in => exmem_mem_read_out,
 				  
 				  --out
-				  read_data_out => data_storage_read_data_out);
+				  read_data_out => data_storage_read_data_out,			  
+				 
+				  --out steuersignale
+				  pipeline_en_out 	=> pipeline_en,
+				  
+				  --in wishbone
+				  wb_dat_in 	=> wb_dat_in,
+			     wb_ack_in 	=> wb_ack_in,
+				  
+				  --out wishbone bus
+				  wb_adr_out 		=>	wb_adr_out,
+				  wb_dat_out 		=>	wb_dat_out,
+				  wb_we_out	 		=>	wb_we_out, 		
+				  wb_sel_out 		=> wb_sel_out,  	
+				  wb_strobe_out 	=> wb_strobe_out,					
+				  wb_cyc_out  	 	=> wb_cyc_out);
 				  
 	memwb_reg : entity work.memwb_pipeline_reg 										--memwb pipeline reg
    port map ( --in
-				  clk => clk,
+				  clk_in => clk_in,
 				  read_data_in => data_storage_read_data_out,
 				  alu_result_in => alu_result_out,
 				  reg_dst_addr_in => exmem_reg_dst_addr_out,

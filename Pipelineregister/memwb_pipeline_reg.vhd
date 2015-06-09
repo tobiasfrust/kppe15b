@@ -31,7 +31,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity memwb_pipeline_reg is
     Port ( --in
-			  clk : in STD_LOGIC;
+			  clk_in : in STD_LOGIC;
 			  read_data_in : in  STD_LOGIC_VECTOR (31 downto 0);
            alu_result_in : in  STD_LOGIC_VECTOR (31 downto 0);
            reg_dst_addr_in : in  STD_LOGIC_VECTOR (4 downto 0);
@@ -49,10 +49,10 @@ end memwb_pipeline_reg;
 architecture Behavioral of memwb_pipeline_reg is
 begin
 
-	process(clk)
+	process(clk_in)
 	begin
 	
-		if rising_edge(clk) then
+		if rising_edge(clk_in) then
 			  read_data_out 		<= read_data_in; 
 			  alu_result_out 		<= alu_result_in;
 			  reg_dst_addr_out 	<= reg_dst_addr_in; 

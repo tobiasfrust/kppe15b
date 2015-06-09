@@ -31,7 +31,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity exmem_pipeline_reg is
     Port ( --in
-			  clk : in STD_LOGIC;
+			  clk_in : in STD_LOGIC;
 			  jump_addr_in : in  STD_LOGIC_VECTOR (31 downto 0);
            alu_zero_in : in  STD_LOGIC;
            alu_result_in : in  STD_LOGIC_VECTOR (31 downto 0);
@@ -68,10 +68,10 @@ architecture Behavioral of exmem_pipeline_reg is
 
 begin
 
-	process(clk)
+	process(clk_in)
 	begin
 	
-		if rising_edge(clk) then
+		if rising_edge(clk_in) then
 			  jump_addr_out 		<= jump_addr_in; 
 			  alu_zero_out 		<= alu_zero_in;
 			  alu_result_out 		<= alu_result_in; 

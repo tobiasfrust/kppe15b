@@ -33,13 +33,13 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity idex_pipeline_reg is
-    Port ( clk : in STD_LOGIC;
+    Port ( clk_in : in STD_LOGIC;
 			  --in
 			  read_data1_in : in  STD_LOGIC_VECTOR (31 downto 0);
            read_data2_in : in  STD_LOGIC_VECTOR (31 downto 0);
            sign_extended_in : in  STD_LOGIC_VECTOR (31 downto 0);
-           write_address_rt_in : in  STD_LOGIC_VECTOR (31 downto 0);
-			  write_address_rd_in : in  STD_LOGIC_VECTOR (31 downto 0);
+           write_address_rt_in : in  STD_LOGIC_VECTOR (4 downto 0);
+			  write_address_rd_in : in  STD_LOGIC_VECTOR (4 downto 0);
 			  program_counter_in : in STD_LOGIC_VECTOR (31 downto 0);			  
 			  
 			  --in steuersignale
@@ -59,8 +59,8 @@ entity idex_pipeline_reg is
 			  read_data1_out : out  STD_LOGIC_VECTOR (31 downto 0);
            read_data2_out : out  STD_LOGIC_VECTOR (31 downto 0);
            sign_extended_out : out  STD_LOGIC_VECTOR (31 downto 0);
-           write_address_rt_out : out  STD_LOGIC_VECTOR (31 downto 0);
-			  write_address_rd_out : out  STD_LOGIC_VECTOR (31 downto 0);
+           write_address_rt_out : out  STD_LOGIC_VECTOR (4 downto 0);
+			  write_address_rd_out : out  STD_LOGIC_VECTOR (4 downto 0);
 			  program_counter_out : out STD_LOGIC_VECTOR (31 downto 0);
 			  --alu_ctrl_out : out STD_LOGIC_VECTOR (5 downto 0);					--hat keinen eigenen Eingang, sondern kann immer aus den unteren 6 Bit des immediate feldes bereitgestellt werden
 			  
@@ -82,9 +82,9 @@ end idex_pipeline_reg;
 architecture Behavioral of idex_pipeline_reg is
 
 begin
-	process(clk)
+	process(clk_in)
 	begin
-		if rising_edge(clk) then
+		if rising_edge(clk_in) then
 			read_data1_out 			<= read_data1_in;
 			read_data2_out 			<= read_data2_in;
 			sign_extended_out 		<= sign_extended_in;

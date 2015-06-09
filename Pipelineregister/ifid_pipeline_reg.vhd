@@ -34,15 +34,15 @@ entity ifid_pipeline_reg is
            instruction_in : in  STD_LOGIC_VECTOR (31 downto 0);
            program_counter_out : out  STD_LOGIC_VECTOR (31 downto 0);
            instruction_out : out  STD_LOGIC_VECTOR (31 downto 0);
-			  clk : in STD_LOGIC);
+			  clk_in : in STD_LOGIC);
 end ifid_pipeline_reg;
 
 architecture Behavioral of ifid_pipeline_reg is
 
 begin
-	process(clk)
+	process(clk_in)
 	begin
-		if rising_edge(clk) then
+		if rising_edge(clk_in) then
 			program_counter_out 	<= 	program_counter_in;
 			instruction_out 		<= 	instruction_in;
 		end if;
