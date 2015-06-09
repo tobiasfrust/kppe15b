@@ -44,7 +44,7 @@ begin
 	process(alu_op, funct)
 	variable temp: STD_LOGIC_VECTOR(7 downto 0);
 	begin
-		temp := alu_op & funct;
+		temp := alu_op & funct;									--TODO kommentieren
 		if std_match(temp, "00------") then
 			alu_control_sig <= "0010";
 		elsif std_match(temp, "01------") then

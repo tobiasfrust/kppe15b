@@ -34,13 +34,13 @@ entity mips_decoder is
   port (
     insn       : in  std_logic_vector(31 downto 0);
     alu_cmd    : out ALU_CMD_TYPE;
-    reg_dst    : out std_logic_vector;
-    branch     : out std_logic_vector;
-    mem_read   : out std_logic_vector;
-    mem_to_reg : out std_logic_vector;
-    mem_write  : out std_logic_vector;
-    alu_src    : out std_logic_vector;
-    reg_write  : out std_logic_vector
+    reg_dst    : out std_logic;
+    branch     : out std_logic;
+    mem_read   : out std_logic;
+    mem_to_reg : out std_logic;
+    mem_write  : out std_logic;
+    alu_src    : out std_logic;
+    reg_write  : out std_logic
 	);
 
 end mips_decoder;
