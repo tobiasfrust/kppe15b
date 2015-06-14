@@ -28,39 +28,73 @@ use IEEE.NUMERIC_STD.ALL;
 -- any Xilinx primitives in this code.
 --library UNISIM;
 --use UNISIM.VComponents.all;
+use work.mips.all;
 
-
-
---nach Buch S. 308/Kapitel 4.4.1
 entity alu_control is
     Port ( alu_op : in  STD_LOGIC_VECTOR (1 downto 0);
            funct : in  STD_LOGIC_VECTOR (5 downto 0);
-           alu_control_sig : out  STD_LOGIC_VECTOR (3 downto 0));
+			  instruction : STD_LOGIC_VECTOR (5 downto 0);
+           alu_control_sig : out  ALU_CMD_TYPE);
 end alu_control;
 
 architecture Behavioral of alu_control is
 
 begin
-	process(alu_op, funct)
+	process(alu_op, funct, instruction)
 	variable temp: STD_LOGIC_VECTOR(7 downto 0);
 	begin
-		temp := alu_op & funct;									--TODO kommentieren
+		temp := alu_op & funct;
+		--Load-Befehle
 		if std_match(temp, "00------") then
-			alu_control_sig <= "0010";
+			alu_control_sig <= ALU_CMD_ADD;
+		--Branch-Befehle
 		elsif std_match(temp, "01------") then
-			alu_control_sig <= "0110";
-		elsif std_match(temp, "10--0000") then
-			alu_control_sig <= "0010";
-		elsif std_match(temp, "1---0010") then
-			alu_control_sig <= "0110";
-		elsif std_match(temp, "10--0100") then
-			alu_control_sig <= "0000";
-		elsif std_match(temp, "10--0101") then
-			alu_control_sig <= "0001";
-		elsif std_match(temp, "1---1010") then
-			alu_control_sig <= "0111";
+			alu_control_sig <= ALU_CMD_SUB;
+		--R-Befehle
+		elsif std_match(temp, "10000000") then
+			alu_control_sig <= ALU_CMD_SLL;
+		elsif std_match(temp, "10000010") then
+			alu_control_sig <= ALU_CMD_SRL;
+		elsif std_match(temp, "10000011") then
+			alu_control_sig <= ALU_CMD_SRA;
+		elsif std_match(temp, "10100100") then
+			alu_control_sig <= ALU_CMD_AND;
+		elsif std_match(temp, "10100101") then
+			alu_control_sig <= ALU_CMD_OR;
+		elsif std_match(temp, "10100110") then
+			alu_control_sig <= ALU_CMD_XOR;
+		elsif std_match(temp, "10100111") then
+			alu_control_sig <= ALU_CMD_NOR;
+		elsif std_match(temp, "10100000") then
+			alu_control_sig <= ALU_CMD_ADD;
+		elsif std_match(temp, "10100001") then
+			alu_control_sig <= ALU_CMD_ADDU;
+		elsif std_match(temp, "10100010") then
+			alu_control_sig <= ALU_CMD_SUB;
+		elsif std_match(temp, "10100011") then
+			alu_control_sig <= ALU_CMD_SUBU;
+		elsif std_match(temp, "10101010") then
+			alu_control_sig <= ALU_CMD_SLT;
+		elsif std_match(temp, "10101011") then
+			alu_control_sig <= ALU_CMD_SLTU;
+		--immediate-befehle
+		elsif (alu_op = "11") AND (instruction = "001100") then
+			alu_control_sig <= ALU_CMD_AND;
+		elsif (alu_op = "11") AND (instruction = "001101") then
+			alu_control_sig <= ALU_CMD_OR;
+		elsif (alu_op = "11") AND (instruction = "001110") then
+			alu_control_sig <= ALU_CMD_XOR;
+		elsif (alu_op = "11") AND (instruction = "001010") then
+			alu_control_sig <= ALU_CMD_SLT;
+		elsif (alu_op = "11") AND (instruction = "001011") then
+			alu_control_sig <= ALU_CMD_SLTU;
+		elsif (alu_op = "11") AND (instruction = "001000") then
+			alu_control_sig <= ALU_CMD_ADD;
+		elsif (alu_op = "11") AND (instruction = "001001") then
+			alu_control_sig <= ALU_CMD_ADDU;
+			
 		else
-			alu_control_sig <= "0000";
+			alu_control_sig <= ALU_CMD_DNTC;
 		end if;
 	end process;
 

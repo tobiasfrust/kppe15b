@@ -36,11 +36,11 @@ entity datapath_module is
 				clk_in : in STD_LOGIC;
 				rst_in : in STD_LOGIC;
 				instruction_in : in  STD_LOGIC_VECTOR (31 downto 0);				--befehl aus befehlsspeicher
-				pc_inc_in : in  STD_LOGIC_VECTOR (31 downto 0);						--der um 4 erhöhte Befehlszähler
+				pc_inc_in : in  STD_LOGIC_VECTOR (31 downto 0);						--der um 4 erhhte Befehlszhler
 				
 				--in steuersignale
 				--ex
-				reg_dst_ctrl_in : in STD_LOGIC;											--entscheided, ob rd oder rt feld als write addr für des regfile genutzt wird											
+				reg_dst_ctrl_in : in STD_LOGIC;											--entscheided, ob rd oder rt feld als write addr fr des regfile genutzt wird											
 				alu_src_in : in STD_LOGIC;
 				alu_op_in : in STD_LOGIC_VECTOR (1 downto 0);
 				--mem
@@ -53,7 +53,7 @@ entity datapath_module is
 			  
 			   --out
 			   instruction_out : out STD_LOGIC_VECTOR (31 downto 0);		   	--befehl, der ans Steuerwerk geht
-				pc_src : out STD_LOGIC;													--ausgang für den muxer vor dem program counter, der bei sprung die quelle auswählt
+				pc_src : out STD_LOGIC;													--ausgang fr den muxer vor dem program counter, der bei sprung die quelle auswhlt
 				
 				--############################################
 				--#	wishbone signale
@@ -178,9 +178,9 @@ begin
 				  write_address_rd_in => ifid_instruc_out(15 downto 11),
 				  program_counter_in => ifid_pc_out,			  
 				  
-				  --in steuersignale(kommen direkt von eingängen des datenpfad moduls, also von der steuereinheit)
+				  --in steuersignale(kommen direkt von eingngen des datenpfad moduls, also von der steuereinheit)
 				  --ex
-				  reg_dst_ctrl_in => reg_dst_ctrl_in,									--entscheided, ob rd oder rt feld als write addr für des regfile genutzt wird											
+				  reg_dst_ctrl_in => reg_dst_ctrl_in,									--entscheided, ob rd oder rt feld als write addr fr des regfile genutzt wird											
 				  alu_src_in => alu_src_in,
 				  alu_op_in => alu_op_in,
 				  --mem
@@ -215,7 +215,8 @@ begin
 	alu_ctrl : entity work.alu_control													--alu control
    port map ( alu_op => idex_alu_op_out,						
               funct => idex_sign_extended_out(5 downto 0),						--die untersten 6 bits entsprechen auch immer funct
-              alu_control_sig => alu_control_sig_out);
+              instruction => idex_sign_extended_out(5 downto 0),
+				  alu_control_sig => alu_control_sig_out);
 				  
 	alu_src_mux : entity work.mux2_32 													--alu src muxer
    port map ( x_0 => idex_read_data2_out,
