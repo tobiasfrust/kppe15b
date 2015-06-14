@@ -39,7 +39,7 @@ entity mips_top is
 				  
 			--out
 			instruction_out  	: out STD_LOGIC_VECTOR (31 downto 0);		   		--befehl, der ans Steuerwerk geht
-			pc_src 		   	: out STD_LOGIC;												--ausgang für den muxer vor dem program counter, der bei sprung die quelle auswählt
+			pc_src 		   	: out STD_LOGIC;												--ausgang fr den muxer vor dem program counter, der bei sprung die quelle auswhlt
 																										--!!!hier ungenutzt!!!
 			--############################################
 			--#	wishbone signale
@@ -59,7 +59,7 @@ end mips_top;
 architecture Behavioral of mips_top is
 
 	--output signale vom decoder
-	signal alu_cmd_control_out    : ALU_CMD_TYPE;
+	signal alu_op_control_out    :  std_logic_vector(1 downto 0);
 	signal reg_dst_control_out    : std_logic;
 	signal branch_control_out     : std_logic;
 	signal mem_read_control_out   : std_logic;
@@ -75,7 +75,7 @@ architecture Behavioral of mips_top is
 begin
 	decoder : entity work.mips_decoder
 	port map (insn 			 => delayed_instruction_datapath_out,
-				 alu_cmd        => alu_cmd_control_out,
+				 alu_op        => alu_op_control_out,
 				 reg_dst        => reg_dst_control_out,
 				 branch         => branch_control_out,
 				 mem_read       => mem_read_control_out,
@@ -93,7 +93,7 @@ begin
 					instruction_in          => instruction_in,
 					reg_dst_ctrl_in 			=> reg_dst_control_out,
 					alu_src_in					=>	alu_src_control_out,
-					alu_op_in					=>	--TODO,
+					alu_op_in					=>	alu_op_control_out,
 					mem_write_in				=>	mem_write_control_out,
 					mem_read_in					=>	mem_read_control_out,
 					branch_in					=>	branch_control_out,
@@ -105,7 +105,7 @@ begin
 					--out
 					instruction_out 			=> delayed_instruction_datapath_out,	--befehl, der ans Steuerwerk geht. Er geht nicht direkt ans Steuerwerk, weil er erst durch 
 																										--ein pipelineregister muss. (wie es im Buch eingezeichnet ist)
-					pc_src 						=> pc_src_datapath_out,						--ausgang für den muxer vor dem program counter, der bei sprung die quelle auswählt
+					pc_src 						=> pc_src_datapath_out,						--ausgang fr den muxer vor dem program counter, der bei sprung die quelle auswhlt
 																										--!!!hier ungenutzt!!!
 																									
 					wb_adr_out 					=>	wb_adr_out,

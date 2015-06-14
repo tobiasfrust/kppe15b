@@ -33,7 +33,7 @@ entity mips_decoder is
   
   port (
     insn       : in  std_logic_vector(31 downto 0);
-    alu_cmd    : out ALU_CMD_TYPE;
+    alu_op    : out std_logic_vector(1 downto 0);
     reg_dst    : out std_logic;
     branch     : out std_logic;
     mem_read   : out std_logic;
@@ -53,7 +53,6 @@ begin  -- rtl
   process (insn)
   begin  -- process
     -- Default Assignments
-    alu_cmd <= ALU_CMD_DNTC;
 
     -- Decode main opcode.
     case insn(31 downto 26) is
@@ -70,92 +69,92 @@ begin  -- rtl
         -- Function code dependent assignments follow now.
         case insn(5 downto 0) is
           when "000000" =>              -- SLL
-            alu_cmd    <= ALU_CMD_SLL;
-            alu_src    <= '1';           --shamt-Wert wird benötigt
+            alu_op     <= "10";          -- R-Befehl
+            alu_src    <= '1';           --shamt-Wert wird bentigt
             reg_dst    <= '1';           --in rd schreiben
             reg_write  <= '1';           --in Register schreiben
             branch     <= '0';           --kein Sprung
           when "000010" =>              -- SRL
-            alu_cmd    <= ALU_CMD_SRL;
-            alu_src    <= '1';           --shamt-Wert wird benötigt
+            alu_op    <= "10";
+            alu_src    <= '1';           --shamt-Wert wird bentigt
             reg_dst    <= '1';           --in rd schreiben
             reg_write  <= '1';           --in Register schreiben
             branch     <= '0';           --kein Sprung
           when "000011" =>              -- SRA
-            alu_cmd <= ALU_CMD_SRA;
+            alu_op <= "10";
             
           when "000100" =>              -- SLLV
-            alu_cmd <= ALU_CMD_SLL;
+            alu_op <= "10";
             
           when "000110" =>              -- SRLV
-            alu_cmd <= ALU_CMD_SRL;
+            alu_op <= "10";
             
           when "000111" =>              -- SRAV
-            alu_cmd <= ALU_CMD_SRA;
+            alu_op <= "10";
 
           when "001000" =>              -- JR
 			
           when "001001" =>              -- JALR
             
           when "100000" =>              -- ADD
-            alu_cmd    <= ALU_CMD_ADD;
+            alu_op    <= "10";
         	reg_dst    <= '1';          --in rd schreiben
         	branch     <= '0';		  --kein Sprung
-        	alu_src    <= '0';		  --Wert aus Register wird benötigt
+        	alu_src    <= '0';		  --Wert aus Register wird bentigt
         	reg_write  <= '1';          --in Register schreiben	
           when "100001" =>              -- ADDU
-            alu_cmd <= ALU_CMD_ADDU;
+            alu_op <= "10";
             reg_dst    <= '1';          --in rd schreiben
         	branch     <= '0';		  --kein Sprung
-        	alu_src    <= '0';		  --Wert aus Register wird benötigt
+        	alu_src    <= '0';		  --Wert aus Register wird bentigt
         	reg_write  <= '1';          --in Register schreiben
           when "100010" =>              -- SUB
-            alu_cmd <= ALU_CMD_SUB;
+            alu_op    <= "10";
             reg_dst    <= '1';          --in rd schreiben
         	branch     <= '0';		  --kein Sprung
-        	alu_src    <= '0';		  --Wert aus Register wird benötigt
+        	alu_src    <= '0';		  --Wert aus Register wird bentigt
         	reg_write  <= '1';          --in Register schreiben
           when "100011" =>              -- SUBU
-            alu_cmd <= ALU_CMD_SUBU;
+            alu_op <= "10";
             reg_dst    <= '1';          --in rd schreiben
         	branch     <= '0';		  --kein Sprung
-        	alu_src    <= '0';		  --Wert aus Register wird benötigt
+        	alu_src    <= '0';		  --Wert aus Register wird bentigt
         	reg_write  <= '1';          --in Register schreiben
           when "100100" =>              -- AND
-            alu_cmd <= ALU_CMD_AND;
+            alu_op <= "10";
             reg_dst    <= '1';          --in rd schreiben
         	branch     <= '0';		  --kein Sprung
-        	alu_src    <= '0';		  --Wert aus Register wird benötigt
+        	alu_src    <= '0';		  --Wert aus Register wird bentigt
         	reg_write  <= '1';          --in Register schreiben
           when "100101" =>              -- OR
-            alu_cmd <= ALU_CMD_OR;
+            alu_op <= "10";
             reg_dst    <= '1';          --in rd schreiben
         	branch     <= '0';		  --kein Sprung
-        	alu_src    <= '0';		  --Wert aus Register wird benötigt
+        	alu_src    <= '0';		  --Wert aus Register wird bentigt
         	reg_write  <= '1';          --in Register schreiben
           when "100110" =>              -- XOR
-            alu_cmd <= ALU_CMD_XOR;
+            alu_op <= "10";
             reg_dst    <= '1';          --in rd schreiben
         	branch     <= '0';		  --kein Sprung
-        	alu_src    <= '0';		  --Wert aus Register wird benötigt
+        	alu_src    <= '0';		  --Wert aus Register wird bentigt
         	reg_write  <= '1';          --in Register schreiben
           when "100111" =>              -- NOR
-            alu_cmd <= ALU_CMD_NOR;
+            alu_op <= "10";
             reg_dst    <= '1';          --in rd schreiben
         	branch     <= '0';		  --kein Sprung
-        	alu_src    <= '0';		  --Wert aus Register wird benötigt
+        	alu_src    <= '0';		  --Wert aus Register wird bentigt
         	reg_write  <= '1';          --in Register schreiben
           when "101010" =>              -- SLT
-            alu_cmd    <= ALU_CMD_SLT;
+            alu_op    <= "10";
             reg_dst    <= '1';          --in rd schreiben
             branch     <= '0';          --kein Sprung
-            alu_src    <= '0';          --Wert aus Register wird benötigt
+            alu_src    <= '0';          --Wert aus Register wird bentigt
             reg_write  <= '1';          --in Register schreiben                        
           when "101011" =>              -- SLTU
-            alu_cmd <= ALU_CMD_SLTU;
+            alu_op <= "10";
 			reg_dst    <= '1';          --in rd schreiben
             branch     <= '0';          --kein Sprung
-            alu_src    <= '0';          --Wert aus Register wird benötigt
+            alu_src    <= '0';          --Wert aus Register wird bentigt
             reg_write  <= '1';          --in Register schreiben    
           when others => null;
         end case;
@@ -171,7 +170,7 @@ begin  -- rtl
 
         -----------------------------------------------------------------------
       when "001000" =>                  -- ADDI
-        alu_cmd    <= ALU_CMD_ADD;
+        alu_op    <= "11";
         reg_dst    <= '0';		  --in rt schreiben
         branch     <= '0';          --kein Sprung
         alu_src    <= '1';          --immediate-Wert nehmen
@@ -180,7 +179,7 @@ begin  -- rtl
         mem_read   <= '0';          --es muss nicht aus Speicher gelesen werden
         mem_to_reg <= '0';          --ALU-Ergebnis wird direkt in Register gespeichert
       when "001001" =>                  -- ADDIU
-        alu_cmd <= ALU_CMD_ADDU;
+        alu_op <= "11";
         reg_dst    <= '0';		  --in rt schreiben
         branch     <= '0';          --kein Sprung
         alu_src    <= '1';          --immediate-Wert nehmen
@@ -189,13 +188,13 @@ begin  -- rtl
         mem_read   <= '0';          --es muss nicht aus Speicher gelesen werden
         mem_to_reg <= '0';          --ALU-Ergebnis wird direkt in Register gespeichert
       when "001010" =>                  -- SLTI
-        alu_cmd <= ALU_CMD_SLT;
+        alu_op <= "11";
         
       when "001011" =>                  -- SLTIU
-        alu_cmd <= ALU_CMD_SLTU;
+        alu_op <= "11";
         
       when "001100" =>                  -- ANDI
-        alu_cmd <= ALU_CMD_AND;
+        alu_op <= "11";
         reg_dst    <= '0';		  --in rt schreiben
         branch     <= '0';          --kein Sprung
         alu_src    <= '1';          --immediate-Wert nehmen
@@ -204,7 +203,7 @@ begin  -- rtl
         mem_read   <= '0';          --es muss nicht aus Speicher gelesen werden
         mem_to_reg <= '0';          --ALU-Ergebnis wird direkt in Register gespeichert
       when "001101" =>                  -- ORI
-        alu_cmd <= ALU_CMD_OR;
+        alu_op <= "11";
         reg_dst    <= '0';		  --in rt schreiben
         branch     <= '0';          --kein Sprung
         alu_src    <= '1';          --immediate-Wert nehmen
@@ -213,7 +212,7 @@ begin  -- rtl
         mem_read   <= '0';          --es muss nicht aus Speicher gelesen werden
         mem_to_reg <= '0';          --ALU-Ergebnis wird direkt in Register gespeichert
       when "001110" =>                  -- XORI
-        alu_cmd <= ALU_CMD_XOR;
+        alu_op <= "11";
         reg_dst    <= '0';		  --in rt schreiben
         branch     <= '0';          --kein Sprung
         alu_src    <= '1';          --immediate-Wert nehmen
@@ -222,7 +221,7 @@ begin  -- rtl
         mem_read   <= '0';          --es muss nicht aus Speicher gelesen werden
         mem_to_reg <= '0';          --ALU-Ergebnis wird direkt in Register gespeichert
       when "001111" =>                  -- LUI
-        alu_cmd <= ALU_CMD_LUI;
+        alu_op <= "11";
 
         -----------------------------------------------------------------------
       when "100011" =>                  -- LW
