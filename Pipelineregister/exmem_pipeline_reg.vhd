@@ -30,8 +30,11 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity exmem_pipeline_reg is
-    Port ( --in
+    Port ( --in steuerung
+			  pipeline_en_in : in STD_LOGIC;
 			  clk_in : in STD_LOGIC;
+			  
+			  --in
 			  jump_addr_in : in  STD_LOGIC_VECTOR (31 downto 0);
            alu_zero_in : in  STD_LOGIC;
            alu_result_in : in  STD_LOGIC_VECTOR (31 downto 0);
@@ -72,6 +75,7 @@ begin
 	begin
 	
 		if rising_edge(clk_in) then
+			if pipeline_en_in = '1' then
 			  jump_addr_out 		<= jump_addr_in; 
 			  alu_zero_out 		<= alu_zero_in;
 			  alu_result_out 		<= alu_result_in; 
@@ -82,6 +86,7 @@ begin
 			  branch_out 			<= branch_in;
 			  mem_to_reg_out 		<= mem_to_reg_in;
 			  reg_write_out		<= reg_write_in;
+			end if;
 		end if;
 	
 	end process;

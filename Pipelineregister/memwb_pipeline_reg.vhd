@@ -30,8 +30,11 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity memwb_pipeline_reg is
-    Port ( --in
+    Port ( --in steuerung
+			  pipeline_en_in : in STD_LOGIC;
 			  clk_in : in STD_LOGIC;
+	 
+			  --in
 			  read_data_in : in  STD_LOGIC_VECTOR (31 downto 0);
            alu_result_in : in  STD_LOGIC_VECTOR (31 downto 0);
            reg_dst_addr_in : in  STD_LOGIC_VECTOR (4 downto 0);
@@ -53,11 +56,13 @@ begin
 	begin
 	
 		if rising_edge(clk_in) then
+			if pipeline_en_in = '1' then
 			  read_data_out 		<= read_data_in; 
 			  alu_result_out 		<= alu_result_in;
 			  reg_dst_addr_out 	<= reg_dst_addr_in; 
 			  mem_to_reg_out 		<= mem_to_reg_in;
 			  reg_write_out 		<= reg_write_in;
+			 end if;
 		end if;
 	
 	end process;

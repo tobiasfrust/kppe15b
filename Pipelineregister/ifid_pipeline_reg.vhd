@@ -30,11 +30,17 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity ifid_pipeline_reg is
-    Port ( program_counter_in : in  STD_LOGIC_VECTOR (31 downto 0);
-           instruction_in : in  STD_LOGIC_VECTOR (31 downto 0);
-           program_counter_out : out  STD_LOGIC_VECTOR (31 downto 0);
-           instruction_out : out  STD_LOGIC_VECTOR (31 downto 0);
-			  clk_in : in STD_LOGIC);
+    Port ( --in
+			  program_counter_in : in  STD_LOGIC_VECTOR (31 downto 0);
+			  instruction_in : in  STD_LOGIC_VECTOR (31 downto 0);
+			  
+			  --in steuersignale
+			  clk_in : in STD_LOGIC;
+			  pipeline_en_in : in STD_LOGIC;
+			  
+			  --out			  
+			  program_counter_out : out  STD_LOGIC_VECTOR (31 downto 0);
+			  instruction_out : out  STD_LOGIC_VECTOR (31 downto 0));
 end ifid_pipeline_reg;
 
 architecture Behavioral of ifid_pipeline_reg is
@@ -43,8 +49,10 @@ begin
 	process(clk_in)
 	begin
 		if rising_edge(clk_in) then
-			program_counter_out 	<= 	program_counter_in;
-			instruction_out 		<= 	instruction_in;
+			if pipeline_en_in = '1' then
+				program_counter_out 	<= 	program_counter_in;
+				instruction_out 		<= 	instruction_in;
+			end if;
 		end if;
 	end process;
 
