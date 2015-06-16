@@ -149,6 +149,7 @@ begin
 	ifid_reg : entity work.ifid_pipeline_reg 											--ifid_pipeline_reg
 	port map ( program_counter_in => pc_inc_in,
 				  instruction_in => instruction_in,
+				  pipeline_en_in => pipeline_en,
 				  program_counter_out => ifid_pc_out,
 				  instruction_out => ifid_instruc_out,
 				  clk_in => clk_in);
@@ -176,7 +177,8 @@ begin
 				  sign_extended_in => sign_extended_out,
 				  write_address_rt_in => ifid_instruc_out(20 downto 16),
 				  write_address_rd_in => ifid_instruc_out(15 downto 11),
-				  program_counter_in => ifid_pc_out,			  
+				  program_counter_in => ifid_pc_out,
+				  pipeline_en_in => pipeline_en,				  
 				  
 				  --in steuersignale(kommen direkt von eingngen des datenpfad moduls, also von der steuereinheit)
 				  --ex
@@ -251,6 +253,7 @@ begin
 				alu_result_in => alu_result_out,
 				write_data_in => idex_read_data2_out,
 				reg_dst_addr_in => reg_dst_mux_out,
+				pipeline_en_in => pipeline_en,
 
 				--steuersignale
 				--mem
@@ -314,7 +317,8 @@ begin
 				  alu_result_in => alu_result_out,
 				  reg_dst_addr_in => exmem_reg_dst_addr_out,
 				  mem_to_reg_in => exmem_mem_to_reg_out,
-				  reg_write_in => exmem_reg_write_out,			  
+				  reg_write_in => exmem_reg_write_out,		
+			     pipeline_en_in => pipeline_en,
 				  
 				  --out
 				  read_data_out => memwb_read_data_out,

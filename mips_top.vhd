@@ -32,13 +32,13 @@ use work.mips.all;
 --use UNISIM.VComponents.all;
 
 entity mips_top is
-	Port (instruction_in 	  	: in STD_LOGIC_VECTOR (31 downto 0);
+	Port (--in
+			instruction_in 	  	: in STD_LOGIC_VECTOR (31 downto 0);
 			clk_in            	: in std_logic;
 			rst_in            	: in std_logic;
 			pc_inc_in         	: in STD_LOGIC_VECTOR (31 downto 0);				--!!!hier ungenutzt!!!
 				  
-			--out
-			instruction_out  	: out STD_LOGIC_VECTOR (31 downto 0);		   		--befehl, der ans Steuerwerk geht
+			--out					   		
 			pc_src 		   	: out STD_LOGIC;												--ausgang fr den muxer vor dem program counter, der bei sprung die quelle auswhlt
 																										--!!!hier ungenutzt!!!
 			--############################################
@@ -75,7 +75,7 @@ architecture Behavioral of mips_top is
 begin
 	decoder : entity work.mips_decoder
 	port map (insn 			 => delayed_instruction_datapath_out,
-				 alu_op        => alu_op_control_out,
+				 alu_op         => alu_op_control_out,
 				 reg_dst        => reg_dst_control_out,
 				 branch         => branch_control_out,
 				 mem_read       => mem_read_control_out,
