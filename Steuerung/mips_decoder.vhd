@@ -65,6 +65,7 @@ begin  -- rtl
         mem_write  <= '0'; --es muss nicht in Speicher geschrieben werden
         mem_read   <= '0'; --es muss nicht aus Speicher gelesen werden
         mem_to_reg <= '0'; --ALU-Ergebnis wird direkt in Register gespeichert
+		  reg_write  <= '0'; 
 
         -- Function code dependent assignments follow now.
         case insn(5 downto 0) is
@@ -177,7 +178,7 @@ begin  -- rtl
         reg_write  <= '1';          --in Register schreiben
         mem_write  <= '0';          --es muss nicht in Speicher geschrieben werden
         mem_read   <= '0';          --es muss nicht aus Speicher gelesen werden
-        mem_to_reg <= '0';          --ALU-Ergebnis wird direkt in Register gespeichert
+        mem_to_reg <= '1';  --todo: tobi das was du dir gemerkt hast machen        --ALU-Ergebnis wird direkt in Register gespeichert
       when "001001" =>                  -- ADDIU
         alu_op <= "11";
         reg_dst    <= '0';		  --in rt schreiben

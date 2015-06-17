@@ -33,7 +33,7 @@ use work.mips.all;
 entity alu_control is
     Port ( alu_op : in  STD_LOGIC_VECTOR (1 downto 0);
            funct : in  STD_LOGIC_VECTOR (5 downto 0);
-			  instruction : STD_LOGIC_VECTOR (5 downto 0);
+			  instruction : in STD_LOGIC_VECTOR (5 downto 0);
            alu_control_sig : out  ALU_CMD_TYPE);
 end alu_control;
 

@@ -100,9 +100,9 @@ BEGIN
    -- Clock process definitions
    clk_in_process :process
    begin
-		clk_in <= '0';
-		wait for clk_in_period/2;
 		clk_in <= '1';
+		wait for clk_in_period/2;
+		clk_in <= '0';
 		wait for clk_in_period/2;
    end process;
  
@@ -120,22 +120,19 @@ BEGIN
 		--zusatz fuer immediate
 		variable immediate: std_logic_vector (15 downto 0);
 		
-		--zusatz für jump
+		--zusatz fr jump
 		variable address : std_logic_vector (25 downto 0);
    begin		
       -- hold reset state for 100 ns.
 		rst_in <= '1';
       wait for 100 ns;
-		rst_in <= '0';
-		wait until rising_edge(clk_in);
-		
-		
+		rst_in <= '0';	
 		
 		--#############################################
-		--# load upper immediate test
+		--# add immediate test
 		--#############################################
-		opcode		:= "001111";			--lui
-		rs 			:= "00000";				--nicht genutzt
+		opcode		:= "001000";			--addi
+		rs 			:= "00000";				--operand 1
 		rt				:= "00001";				--soll in register 1
 		immediate	:= x"ABCD";
 		
@@ -150,6 +147,26 @@ BEGIN
 		instruction_in <= x"00000000";
 		wait for 10 ns;
 		instruction_in <= x"00000000";
+		
+--		--#############################################
+--		--# load upper immediate test
+--		--#############################################
+--		opcode		:= "001111";			--lui
+--		rs 			:= "00000";				--nicht genutzt
+--		rt				:= "00001";				--soll in register 1
+--		immediate	:= x"ABCD";
+--		
+--		instruction_in <= opcode & rs & rt & immediate;	
+--		
+--		--4 mal nop ()
+--		wait for 10 ns;
+--		instruction_in <= x"00000000";
+--		wait for 10 ns;
+--		instruction_in <= x"00000000";
+--		wait for 10 ns;
+--		instruction_in <= x"00000000";
+--		wait for 10 ns;
+--		instruction_in <= x"00000000";
 		
 		--assert
 

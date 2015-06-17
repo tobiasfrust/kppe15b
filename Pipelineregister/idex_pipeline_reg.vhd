@@ -42,11 +42,12 @@ entity idex_pipeline_reg is
            sign_extended_in : in  STD_LOGIC_VECTOR (31 downto 0);
            write_address_rt_in : in  STD_LOGIC_VECTOR (4 downto 0);
 			  write_address_rd_in : in  STD_LOGIC_VECTOR (4 downto 0);
-			  program_counter_in : in STD_LOGIC_VECTOR (31 downto 0);			  
+			  program_counter_in : in STD_LOGIC_VECTOR (31 downto 0);
+			  instruction_in : in STD_LOGIC_VECTOR (5 downto 0);			  
 			  
 			  --in steuersignale
 			  --ex
-			  reg_dst_ctrl_in : in STD_LOGIC;											--entscheided, ob rd oder rt feld als write addr für des regfile genutzt wird											
+			  reg_dst_ctrl_in : in STD_LOGIC;											--entscheided, ob rd oder rt feld als write addr fr des regfile genutzt wird											
 			  alu_src_in : in STD_LOGIC;
 			  alu_op_in : in STD_LOGIC_VECTOR (1 downto 0);
 			  --mem
@@ -64,6 +65,7 @@ entity idex_pipeline_reg is
            write_address_rt_out : out  STD_LOGIC_VECTOR (4 downto 0);
 			  write_address_rd_out : out  STD_LOGIC_VECTOR (4 downto 0);
 			  program_counter_out : out STD_LOGIC_VECTOR (31 downto 0);
+			  instruction_out : out STD_LOGIC_VECTOR (5 downto 0);
 			  --alu_ctrl_out : out STD_LOGIC_VECTOR (5 downto 0);					--hat keinen eigenen Eingang, sondern kann immer aus den unteren 6 Bit des immediate feldes bereitgestellt werden
 			  
 			  --out steuersignale
@@ -93,7 +95,8 @@ begin
 				sign_extended_out 		<= sign_extended_in;
 				write_address_rt_out 	<= write_address_rt_in;
 				write_address_rd_out 	<= write_address_rd_in;
-				program_counter_out 		<= program_counter_in;			 
+				program_counter_out 		<= program_counter_in;	
+				instruction_out 			<= instruction_in;
 				
 				--steuersignale
 				--ex

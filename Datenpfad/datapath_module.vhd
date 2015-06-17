@@ -94,6 +94,7 @@ architecture Behavioral of datapath_module is
 	signal idex_write_address_rt_out : STD_LOGIC_VECTOR (4 downto 0);
 	signal idex_write_address_rd_out : STD_LOGIC_VECTOR (4 downto 0);
 	signal idex_program_counter_out : STD_LOGIC_VECTOR (31 downto 0);	
+	signal idex_instruction_out : STD_LOGIC_VECTOR (5 downto 0);	
 	signal idex_reg_dst_ctrl_out : STD_LOGIC;											--out steuersignale (ex)	
 	signal idex_alu_src_out : STD_LOGIC;
 	signal idex_alu_op_out : STD_LOGIC_VECTOR (1 downto 0);	
@@ -178,7 +179,8 @@ begin
 				  write_address_rt_in => ifid_instruc_out(20 downto 16),
 				  write_address_rd_in => ifid_instruc_out(15 downto 11),
 				  program_counter_in => ifid_pc_out,
-				  pipeline_en_in => pipeline_en,				  
+				  pipeline_en_in => pipeline_en,
+				  instruction_in => ifid_instruc_out(31 downto 26),
 				  
 				  --in steuersignale(kommen direkt von eingngen des datenpfad moduls, also von der steuereinheit)
 				  --ex
@@ -199,7 +201,8 @@ begin
 				  sign_extended_out => idex_sign_extended_out,
 				  write_address_rt_out => idex_write_address_rt_out,
 				  write_address_rd_out => idex_write_address_rd_out,
-				  program_counter_out => idex_program_counter_out,				  
+				  program_counter_out => idex_program_counter_out,
+				  instruction_out => idex_instruction_out,
 				  			  
 				  --out steuersignale
 				  --ex
@@ -217,7 +220,7 @@ begin
 	alu_ctrl : entity work.alu_control													--alu control
    port map ( alu_op => idex_alu_op_out,						
               funct => idex_sign_extended_out(5 downto 0),						--die untersten 6 bits entsprechen auch immer funct
-              instruction => idex_sign_extended_out(5 downto 0),
+              instruction => idex_instruction_out,
 				  alu_control_sig => alu_control_sig_out);
 				  
 	alu_src_mux : entity work.mux2_32 													--alu src muxer
@@ -314,7 +317,7 @@ begin
    port map ( --in
 				  clk_in => clk_in,
 				  read_data_in => data_storage_read_data_out,
-				  alu_result_in => alu_result_out,
+				  alu_result_in => exmem_alu_result_out,
 				  reg_dst_addr_in => exmem_reg_dst_addr_out,
 				  mem_to_reg_in => exmem_mem_to_reg_out,
 				  reg_write_in => exmem_reg_write_out,		
