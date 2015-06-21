@@ -33,24 +33,27 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity idex_pipeline_reg is
-    Port ( clk_in : in STD_LOGIC;
+    Port ( --in steuerung
+				pipeline_en_in : in STD_LOGIC;
+				clk_in : in STD_LOGIC;
 			  --in
 			  read_data1_in : in  STD_LOGIC_VECTOR (31 downto 0);
            read_data2_in : in  STD_LOGIC_VECTOR (31 downto 0);
            sign_extended_in : in  STD_LOGIC_VECTOR (31 downto 0);
            write_address_rt_in : in  STD_LOGIC_VECTOR (4 downto 0);
 			  write_address_rd_in : in  STD_LOGIC_VECTOR (4 downto 0);
-			  program_counter_in : in STD_LOGIC_VECTOR (31 downto 0);			  
+			  program_counter_in : in STD_LOGIC_VECTOR (31 downto 0);
+			  instruction_in : in STD_LOGIC_VECTOR (5 downto 0);			  
 			  
 			  --in steuersignale
 			  --ex
-			  reg_dst_ctrl_in : in STD_LOGIC;											--entscheided, ob rd oder rt feld als write addr für des regfile genutzt wird											
+			  reg_dst_ctrl_in : in STD_LOGIC;											--entscheided, ob rd oder rt feld als write addr fr des regfile genutzt wird											
 			  alu_src_in : in STD_LOGIC;
 			  alu_op_in : in STD_LOGIC_VECTOR (1 downto 0);
 			  --mem
 			  mem_write_in : in STD_LOGIC;
 			  mem_read_in : in STD_LOGIC;
-			  branch_in : in STD_LOGIC;													--wenn brach und zero ausgang der alu beide 1 sind, wird gesprungen
+			  branch_in : in STD_LOGIC;													--wenn branch und zero ausgang der alu beide 1 sind, wird gesprungen
 			  --wb
 			  mem_to_reg_in : in STD_LOGIC;
 			  reg_write_in : in STD_LOGIC;
@@ -62,6 +65,7 @@ entity idex_pipeline_reg is
            write_address_rt_out : out  STD_LOGIC_VECTOR (4 downto 0);
 			  write_address_rd_out : out  STD_LOGIC_VECTOR (4 downto 0);
 			  program_counter_out : out STD_LOGIC_VECTOR (31 downto 0);
+			  instruction_out : out STD_LOGIC_VECTOR (5 downto 0);
 			  --alu_ctrl_out : out STD_LOGIC_VECTOR (5 downto 0);					--hat keinen eigenen Eingang, sondern kann immer aus den unteren 6 Bit des immediate feldes bereitgestellt werden
 			  
 			  --out steuersignale
@@ -85,26 +89,28 @@ begin
 	process(clk_in)
 	begin
 		if rising_edge(clk_in) then
-			read_data1_out 			<= read_data1_in;
-			read_data2_out 			<= read_data2_in;
-			sign_extended_out 		<= sign_extended_in;
-			write_address_rt_out 	<= write_address_rt_in;
-			write_address_rd_out 	<= write_address_rd_in;
-			program_counter_out 		<= program_counter_in;			 
-			
-			--steuersignale
-			--ex
-		   reg_dst_ctrl_out 			<= reg_dst_ctrl_in;
-		   alu_src_out 				<= alu_src_in;
-		   alu_op_out 					<= alu_op_in;
-		   --mem
-		   mem_write_out 				<= mem_write_in;
-		   mem_read_out 				<= mem_read_in;
-		   branch_out 					<= branch_in;
-		   --wb
-		   mem_to_reg_out 			<= mem_to_reg_in;
-			reg_write_out				<= reg_write_in;
-			
+			if pipeline_en_in = '1' then
+				read_data1_out 			<= read_data1_in;
+				read_data2_out 			<= read_data2_in;
+				sign_extended_out 		<= sign_extended_in;
+				write_address_rt_out 	<= write_address_rt_in;
+				write_address_rd_out 	<= write_address_rd_in;
+				program_counter_out 		<= program_counter_in;	
+				instruction_out 			<= instruction_in;
+				
+				--steuersignale
+				--ex
+				reg_dst_ctrl_out 			<= reg_dst_ctrl_in;
+				alu_src_out 				<= alu_src_in;
+				alu_op_out 					<= alu_op_in;
+				--mem
+				mem_write_out 				<= mem_write_in;
+				mem_read_out 				<= mem_read_in;
+				branch_out 					<= branch_in;
+				--wb
+				mem_to_reg_out 			<= mem_to_reg_in;
+				reg_write_out				<= reg_write_in;
+			end if;
 		end if;
 	end process;
 

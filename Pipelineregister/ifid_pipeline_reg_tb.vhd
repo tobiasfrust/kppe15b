@@ -2,10 +2,10 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   08:48:22 05/05/2015
+-- Create Date:   20:12:39 06/15/2015
 -- Design Name:   
--- Module Name:   /home/kppe15b/MIPS-Prozessor/ifid_pipeline_reg_tb.vhd
--- Project Name:  MIPS-Prozessor
+-- Module Name:   C:/Users/Alex/Xilinx/SysGen/14.7/MIPS/ifid_pipeline_reg_tb.vhd
+-- Project Name:  MIPS
 -- Target Device:  
 -- Tool versions:  
 -- Description:   
@@ -43,9 +43,10 @@ ARCHITECTURE behavior OF ifid_pipeline_reg_tb IS
     PORT(
          program_counter_in : IN  std_logic_vector(31 downto 0);
          instruction_in : IN  std_logic_vector(31 downto 0);
+         clk_in : IN  std_logic;
+         pipeline_en_in : IN  std_logic;
          program_counter_out : OUT  std_logic_vector(31 downto 0);
-         instruction_out : OUT  std_logic_vector(31 downto 0);
-         clk : IN  std_logic
+         instruction_out : OUT  std_logic_vector(31 downto 0)
         );
     END COMPONENT;
     
@@ -53,14 +54,15 @@ ARCHITECTURE behavior OF ifid_pipeline_reg_tb IS
    --Inputs
    signal program_counter_in : std_logic_vector(31 downto 0) := (others => '0');
    signal instruction_in : std_logic_vector(31 downto 0) := (others => '0');
-   signal clk : std_logic := '0';
+   signal clk_in : std_logic := '0';
+   signal pipeline_en_in : std_logic := '0';
 
  	--Outputs
    signal program_counter_out : std_logic_vector(31 downto 0);
    signal instruction_out : std_logic_vector(31 downto 0);
 
    -- Clock period definitions
-   constant clk_period : time := 10 ns;
+   constant clk_in_period : time := 10 ns;
  
 BEGIN
  
@@ -68,30 +70,68 @@ BEGIN
    uut: ifid_pipeline_reg PORT MAP (
           program_counter_in => program_counter_in,
           instruction_in => instruction_in,
+          clk_in => clk_in,
+          pipeline_en_in => pipeline_en_in,
           program_counter_out => program_counter_out,
-          instruction_out => instruction_out,
-          clk => clk
+          instruction_out => instruction_out
         );
 
    -- Clock process definitions
-   clk_process :process
+   clk_in_process :process
    begin
-		clk <= '0';
-		wait for clk_period/2;
-		clk <= '1';
-		wait for clk_period/2;
+		clk_in <= '0';
+		wait for clk_in_period/2;
+		clk_in <= '1';
+		wait for clk_in_period/2;
    end process;
  
 
    -- Stimulus process
    stim_proc: process
    begin		
-      program_counter_in <= x"01234567";
-		instruction_in <= x"76543210";
-		wait for 10 ns;
-		program_counter_in <= x"AAAAAAAA";
-		instruction_in <= x"00000000";
-		wait for 10 ns;
+      -- hold reset state for 100 ns.
+		
+		pipeline_en_in <= '1';
+      wait for 100 ns;
+		
+		--#####################################
+		--# pipeline enabled test
+		--#####################################
+		
+		program_counter_in		<= x"AAAAAAAA";
+		instruction_in				<= x"BBBBBBBB";
+		
+		wait for 11 ns;
+		
+		assert program_counter_out = x"AAAAAAAA" report "pipeline enabled test failed" severity error;
+		assert instruction_out		= x"BBBBBBBB" report "pipeline enabled test failed" severity error;		
+		
+		wait until rising_edge(clk_in);
+
+		--#####################################
+		--# pipeline disabled test
+		--#####################################
+
+		program_counter_in		<= x"CCCCCCCC";
+		instruction_in				<= x"DDDDDDDD";
+		pipeline_en_in				<= '0';
+		
+		wait for 11 ns;
+		
+		assert program_counter_out = x"AAAAAAAA" report "pipeline disabled test failed" severity error;
+		assert instruction_out		= x"BBBBBBBB" report "pipeline disabled test failed" severity error;
+		
+		wait until rising_edge(clk_in);
+		
+		wait for 15 ns;
+		pipeline_en_in				<= '1';
+		
+		wait until rising_edge(clk_in);
+		wait for 1 ns;
+		
+		assert program_counter_out = x"CCCCCCCC" report "pipeline disabled test failed" severity error;
+		assert instruction_out		= x"DDDDDDDD" report "pipeline disabled test failed" severity error;
+		
 
       wait;
    end process;

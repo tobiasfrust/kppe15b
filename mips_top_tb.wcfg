@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/kppe15b/MIPS_kppe15b/mips_top_tb_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="mips" />
+            <top_module name="mips_top_tb" />
+            <top_module name="numeric_std" />
+            <top_module name="std_logic_1164" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="50" />
+   <wvobject fp_name="/mips_top_tb/instruction_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">instruction_in[31:0]</obj_property>
+      <obj_property name="ObjectShortName">instruction_in[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/clk_in" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_in</obj_property>
+      <obj_property name="ObjectShortName">clk_in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/rst_in" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst_in</obj_property>
+      <obj_property name="ObjectShortName">rst_in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/pc_inc_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">pc_inc_in[31:0]</obj_property>
+      <obj_property name="ObjectShortName">pc_inc_in[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/pc_src" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">pc_src</obj_property>
+      <obj_property name="ObjectShortName">pc_src</obj_property>
+   </wvobject>
+   <wvobject fp_name="group36" type="group">
+      <obj_property name="label">wishbone</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <wvobject fp_name="/mips_top_tb/wb_dat_in" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">wb_dat_in[31:0]</obj_property>
+         <obj_property name="ObjectShortName">wb_dat_in[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/wb_ack_in" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">wb_ack_in</obj_property>
+         <obj_property name="ObjectShortName">wb_ack_in</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/wb_adr_out" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">wb_adr_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">wb_adr_out[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/wb_dat_out" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">wb_dat_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">wb_dat_out[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/wb_cyc_out" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">wb_cyc_out</obj_property>
+         <obj_property name="ObjectShortName">wb_cyc_out</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/wb_strobe_out" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">wb_strobe_out</obj_property>
+         <obj_property name="ObjectShortName">wb_strobe_out</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/wb_sel_out" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">wb_sel_out[3:0]</obj_property>
+         <obj_property name="ObjectShortName">wb_sel_out[3:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/wb_we_out" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">wb_we_out</obj_property>
+         <obj_property name="ObjectShortName">wb_we_out</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/clk_in_period" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_in_period</obj_property>
+      <obj_property name="ObjectShortName">clk_in_period</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider24" type="divider">
+      <obj_property name="label">ifid - stufe</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">128 128 255</obj_property>
+      <obj_property name="TextColor">230 230 230</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider53" type="divider">
+      <obj_property name="label">registerfile</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">128 128 255</obj_property>
+      <obj_property name="TextColor">230 230 230</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[1]" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">[1]</obj_property>
+      <obj_property name="ObjectShortName">registers[1]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/read_address1_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">read_address1_in[4:0]</obj_property>
+      <obj_property name="ObjectShortName">read_address1_in[4:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/read_address2_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">read_address2_in[4:0]</obj_property>
+      <obj_property name="ObjectShortName">read_address2_in[4:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/write_address_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">write_address_in[4:0]</obj_property>
+      <obj_property name="ObjectShortName">write_address_in[4:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/write_data_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">write_data_in[31:0]</obj_property>
+      <obj_property name="ObjectShortName">write_data_in[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/read_data1_out" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">read_data1_out[31:0]</obj_property>
+      <obj_property name="ObjectShortName">read_data1_out[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/read_data2_out" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">read_data2_out[31:0]</obj_property>
+      <obj_property name="ObjectShortName">read_data2_out[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/reg_write_in" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">reg_write_in</obj_property>
+      <obj_property name="ObjectShortName">reg_write_in</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider26" type="divider">
+      <obj_property name="label">decoder</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">128 128 255</obj_property>
+      <obj_property name="TextColor">230 230 230</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/decoder/insn" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">insn[31:0]</obj_property>
+      <obj_property name="ObjectShortName">insn[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/decoder/alu_op" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">alu_op[1:0]</obj_property>
+      <obj_property name="ObjectShortName">alu_op[1:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/decoder/reg_dst" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">reg_dst</obj_property>
+      <obj_property name="ObjectShortName">reg_dst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/decoder/branch" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">branch</obj_property>
+      <obj_property name="ObjectShortName">branch</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/decoder/mem_read" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">mem_read</obj_property>
+      <obj_property name="ObjectShortName">mem_read</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/decoder/mem_to_reg" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">mem_to_reg</obj_property>
+      <obj_property name="ObjectShortName">mem_to_reg</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/decoder/mem_write" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">mem_write</obj_property>
+      <obj_property name="ObjectShortName">mem_write</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/decoder/alu_src" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">alu_src</obj_property>
+      <obj_property name="ObjectShortName">alu_src</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/decoder/reg_write" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">reg_write</obj_property>
+      <obj_property name="ObjectShortName">reg_write</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider54" type="divider">
+      <obj_property name="label">idex</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">128 128 255</obj_property>
+      <obj_property name="TextColor">230 230 230</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider60" type="divider">
+      <obj_property name="label">alu</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">128 128 255</obj_property>
+      <obj_property name="TextColor">230 230 230</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/alu/ctrl" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ctrl[3:0]</obj_property>
+      <obj_property name="ObjectShortName">ctrl[3:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/alu/a" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">a[31:0]</obj_property>
+      <obj_property name="ObjectShortName">a[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/alu/b" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">b[31:0]</obj_property>
+      <obj_property name="ObjectShortName">b[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/alu/s" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">s[31:0]</obj_property>
+      <obj_property name="ObjectShortName">s[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/alu/zero" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">zero</obj_property>
+      <obj_property name="ObjectShortName">zero</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider61" type="divider">
+      <obj_property name="label">alu_ctrl</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">128 128 255</obj_property>
+      <obj_property name="TextColor">230 230 230</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/alu_ctrl/alu_op" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">alu_op[1:0]</obj_property>
+      <obj_property name="ObjectShortName">alu_op[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/alu_ctrl/funct" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">funct[5:0]</obj_property>
+      <obj_property name="ObjectShortName">funct[5:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/alu_ctrl/instruction" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">instruction[5:0]</obj_property>
+      <obj_property name="ObjectShortName">instruction[5:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/alu_ctrl/alu_control_sig" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">alu_control_sig[3:0]</obj_property>
+      <obj_property name="ObjectShortName">alu_control_sig[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider62" type="divider">
+      <obj_property name="label">exmem</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">128 128 255</obj_property>
+      <obj_property name="TextColor">230 230 230</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/exmem_reg/alu_result_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">alu_result_in[31:0]</obj_property>
+      <obj_property name="ObjectShortName">alu_result_in[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/exmem_reg/alu_result_out" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">alu_result_out[31:0]</obj_property>
+      <obj_property name="ObjectShortName">alu_result_out[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider65" type="divider">
+      <obj_property name="label">memwb</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">128 128 255</obj_property>
+      <obj_property name="TextColor">230 230 230</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/memwb_reg/alu_result_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">alu_result_in[31:0]</obj_property>
+      <obj_property name="ObjectShortName">alu_result_in[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/memwb_reg/alu_result_out" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">alu_result_out[31:0]</obj_property>
+      <obj_property name="ObjectShortName">alu_result_out[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider68" type="divider">
+      <obj_property name="label">memtoreg_muxer</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">128 128 255</obj_property>
+      <obj_property name="TextColor">230 230 230</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/mem_to_reg_mux/x_0" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">x_0[31:0]</obj_property>
+      <obj_property name="ObjectShortName">x_0[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/mem_to_reg_mux/x_1" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">x_1[31:0]</obj_property>
+      <obj_property name="ObjectShortName">x_1[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/mem_to_reg_mux/control" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">control</obj_property>
+      <obj_property name="ObjectShortName">control</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/mem_to_reg_mux/y" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">y[31:0]</obj_property>
+      <obj_property name="ObjectShortName">y[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+</wave_config>

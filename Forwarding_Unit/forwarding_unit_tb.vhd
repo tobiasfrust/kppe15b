@@ -90,41 +90,321 @@ BEGIN
       -- initial values
 		EXMEM_reg_write	<=		'0';
       MEMWB_reg_write	<=		'0';
-      EXMEM_adressRd		<=		x"00000000";
+      EXMEM_adressRd		<=		x"00000010";
       MEMWB_adressRd		<=		x"00000001";
-		IDEX_adressRs		<=		x"00000010";
-		IDEX_adressRt		<=		x"00000100";
+		IDEX_adressRs		<=		x"00001111";
+		IDEX_adressRt		<=		x"11110000";
 	  WAIT FOR 10ns;
      
 	-- create stimuli
 	  WAIT FOR 1ns;
-	  assert (forward_Rs = "00") report "forward_A ist falsch" severity error;
-	  assert (forward_Rt = "00") report "forward_B ist falsch" severity error;
+	  assert (forward_Rs = "00") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "00") report "forward_Rt ist falsch" severity error;
 	  WAIT FOR 10ns;
 	  
-	  EXMEM_adressRd <= x"00000010";
-	  WAIT FOR 1ns;
-	  assert (forward_Rs = "00") report "forward_A ist falsch" severity error;
-	  assert (forward_Rt = "00") report "forward_B ist falsch" severity error;
-	  WAIT FOR 10ns;
 	  
-	  EXMEM_reg_write <= '1';
-	  WAIT FOR 1ns;
-	  assert (forward_Rs = "01") report "forward_A ist falsch" severity error;
-	  assert (forward_Rt = "00") report "forward_B ist falsch" severity error;
-	  WAIT FOR 10ns;
 	  
-	  MEMWB_reg_write <= '1';
+	  
+	  
+	  
+	  
+	  -- EXMEM_adressRd = IDEX_adressRs
+	  
+	  EXMEM_adressRd	<=	x"00001111";
+     MEMWB_adressRd	<=	x"03001001";
+
 	  EXMEM_reg_write <= '0';
+	  MEMWB_reg_write <= '0';
 	  WAIT FOR 1ns;
-	  assert (forward_Rs = "10") report "forward_A ist falsch" severity error;
-	  assert (forward_Rt = "00") report "forward_B ist falsch" severity error;
+	  assert (forward_Rs = "00") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "00") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  EXMEM_reg_write <= '0';
+	  MEMWB_reg_write <= '1';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "00") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "00") report "forward_Rt ist falsch" severity error;
 	  WAIT FOR 10ns;
 	  
 	  EXMEM_reg_write <= '1';
+	  MEMWB_reg_write <= '0';
 	  WAIT FOR 1ns;
-	  assert (forward_Rs = "01") report "forward_A ist falsch" severity error;
-	  assert (forward_Rt = "00") report "forward_B ist falsch" severity error;
+	  assert (forward_Rs = "01") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "00") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  EXMEM_reg_write <= '1';
+	  MEMWB_reg_write <= '1';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "01") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "00") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  	  
+	  -- MEMWB_adressRd = IDEX_adressRs
+	  
+	  EXMEM_adressRd	<=	x"02630030";
+	  MEMWB_adressRd	<=	x"00001111";
+
+	  EXMEM_reg_write <= '0';	  
+	  MEMWB_reg_write <= '0';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "00") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "00") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+
+	  EXMEM_reg_write <= '0';
+	  MEMWB_reg_write <= '1';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "10") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "00") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  EXMEM_reg_write <= '1';
+	  MEMWB_reg_write <= '0';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "00") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "00") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  EXMEM_reg_write <= '1';
+	  MEMWB_reg_write <= '1';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "10") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "00") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  -- EXMEM_adressRd = IDEX_adressRt
+	  
+	  EXMEM_adressRd	<=	x"11110000";
+     MEMWB_adressRd	<=	x"03001001";
+	  
+	  EXMEM_reg_write <= '0';
+	  MEMWB_reg_write <= '0';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "00") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "00") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  EXMEM_reg_write <= '0';
+	  MEMWB_reg_write <= '1';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "00") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "00") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  EXMEM_reg_write <= '1';
+	  MEMWB_reg_write <= '0';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "00") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "01") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  EXMEM_reg_write <= '1';
+	  MEMWB_reg_write <= '1';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "00") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "01") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  -- MEMWB_adressRd = IDEX_adressRt
+	  
+	  EXMEM_adressRd	<=	x"02630030";
+	  MEMWB_adressRd	<=	x"11110000";
+
+	  EXMEM_reg_write <= '0';	  
+	  MEMWB_reg_write <= '0';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "00") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "00") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+
+	  EXMEM_reg_write <= '0';
+	  MEMWB_reg_write <= '1';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "00") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "10") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  EXMEM_reg_write <= '1';
+	  MEMWB_reg_write <= '0';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "00") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "00") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  EXMEM_reg_write <= '1';
+	  MEMWB_reg_write <= '1';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "00") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "10") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  -- EXMEM_adressRd = MEMWB_adressRd = IDEX_adressRs
+	  
+	  EXMEM_adressRd	<=	x"00001111";
+     MEMWB_adressRd	<=	x"00001111";
+
+	  EXMEM_reg_write <= '0';
+	  MEMWB_reg_write <= '0';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "00") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "00") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  EXMEM_reg_write <= '0';
+	  MEMWB_reg_write <= '1';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "10") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "00") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  EXMEM_reg_write <= '1';
+	  MEMWB_reg_write <= '0';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "01") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "00") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  EXMEM_reg_write <= '1';
+	  MEMWB_reg_write <= '1';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "01") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "00") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  -- EXMEM_adressRd = MEMWB_adressRd = IDEX_adressRt
+	  
+	  EXMEM_adressRd	<=	x"11110000";
+     MEMWB_adressRd	<=	x"11110000";
+	  
+	  EXMEM_reg_write <= '0';
+	  MEMWB_reg_write <= '0';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "00") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "00") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  EXMEM_reg_write <= '0';
+	  MEMWB_reg_write <= '1';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "00") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "10") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  EXMEM_reg_write <= '1';
+	  MEMWB_reg_write <= '0';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "00") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "01") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  EXMEM_reg_write <= '1';
+	  MEMWB_reg_write <= '1';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "00") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "01") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+
+	  -- EXMEM_adressRd = IDEX_adressRs = IDEX_adressRt
+	  
+	  EXMEM_adressRd		<=		x"11000011";
+     MEMWB_adressRd		<=		x"02553401";
+	  IDEX_adressRs		<=		x"11000011";
+	  IDEX_adressRt		<=		x"11000011";
+
+	  EXMEM_reg_write <= '0';
+	  MEMWB_reg_write <= '0';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "00") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "00") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  EXMEM_reg_write <= '0';
+	  MEMWB_reg_write <= '1';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "00") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "00") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  EXMEM_reg_write <= '1';
+	  MEMWB_reg_write <= '0';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "01") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "01") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  EXMEM_reg_write <= '1';
+	  MEMWB_reg_write <= '1';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "01") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "01") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  	  
+	  -- MEMWB_adressRd = IDEX_adressRs = IDEX_adressRt
+	  
+	  EXMEM_adressRd	<=	x"02630030";
+	  MEMWB_adressRd	<=	x"11000011";
+
+	  EXMEM_reg_write <= '0';	  
+	  MEMWB_reg_write <= '0';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "00") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "00") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+
+	  EXMEM_reg_write <= '0';
+	  MEMWB_reg_write <= '1';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "10") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "10") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  EXMEM_reg_write <= '1';
+	  MEMWB_reg_write <= '0';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "00") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "00") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  EXMEM_reg_write <= '1';
+	  MEMWB_reg_write <= '1';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "10") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "10") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  -- EXMEM_adressRd = MEMWB_adressRd = IDEX_adressRs = IDEX_adressRt
+	  
+	  EXMEM_adressRd	<=	x"11000011";
+     MEMWB_adressRd	<=	x"11000011";
+	  
+	  EXMEM_reg_write <= '0';
+	  MEMWB_reg_write <= '0';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "00") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "00") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  EXMEM_reg_write <= '0';
+	  MEMWB_reg_write <= '1';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "10") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "10") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  EXMEM_reg_write <= '1';
+	  MEMWB_reg_write <= '0';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "01") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "01") report "forward_Rt ist falsch" severity error;
+	  WAIT FOR 10ns;
+	  
+	  EXMEM_reg_write <= '1';
+	  MEMWB_reg_write <= '1';
+	  WAIT FOR 1ns;
+	  assert (forward_Rs = "01") report "forward_Rs ist falsch" severity error;
+	  assert (forward_Rt = "01") report "forward_Rt ist falsch" severity error;
 	  WAIT FOR 10ns;
 	  
 	  
@@ -132,15 +412,7 @@ BEGIN
 	  
 	  
 	  
---	  EXMEM_adressRd <= x"00000100";
---	  WAIT FOR 1ns;
---	  assert (forward_Rs = "00") report "forward_A ist falsch" severity error;
---	  assert (forward_Rt = "00") report "forward_B ist falsch" severity error;
---	  
---	  EXMEM_reg_write	<=		'1';
---	  WAIT FOR 1ns;
---	  assert (forward_Rs = "01") report "forward_A ist falsch" severity error;
---	  assert (forward_Rt = "00") report "forward_B ist falsch" severity error;
+	  
 	  
 	   wait;
    end process;
