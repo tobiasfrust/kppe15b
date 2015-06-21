@@ -67,7 +67,8 @@ BEGIN
            WHEN ALU_CMD_NOR	=>   S <= A NOR B;          															-- nor
            WHEN ALU_CMD_SLL	=>   S <= std_logic_vector(unsigned(A) sll to_integer(unsigned(B)));    -- shift right
            WHEN ALU_CMD_SRL	=>   S <= std_logic_vector(unsigned(A) srl to_integer(unsigned(B)));    -- shift left
-			  WHEN ALU_CMD_SLT	=>   S <= to_slv(signed(A) > signed(B));            							-- set on less than
+			  WHEN ALU_CMD_SLT	=>   S <= to_slv(signed(A) > signed(B));											-- set on less than
+				--TODO: SLTU, SRA, LUI
            WHEN OTHERS			=>   S <= (OTHERS => '-');  															-- don't care for S
         END CASE;
     END PROCESS;
