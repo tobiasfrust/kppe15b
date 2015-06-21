@@ -187,12 +187,26 @@ begin  -- rtl
         reg_write  <= '1';          --in Register schreiben
         mem_write  <= '0';          --es muss nicht in Speicher geschrieben werden
         mem_read   <= '0';          --es muss nicht aus Speicher gelesen werden
-        mem_to_reg <= '0';          --ALU-Ergebnis wird direkt in Register gespeichert
+        mem_to_reg <= '1';          --ALU-Ergebnis wird direkt in Register gespeichert
       when "001010" =>                  -- SLTI
         alu_op <= "11";
+        reg_dst    <= '0';		  --in rt schreiben
+        branch     <= '0';          --kein Sprung
+        alu_src    <= '1';          --immediate-Wert nehmen
+        reg_write  <= '1';          --in Register schreiben
+        mem_write  <= '0';          --es muss nicht in Speicher geschrieben werden
+        mem_read   <= '0';          --es muss nicht aus Speicher gelesen werden
+        mem_to_reg <= '1';          --ALU-Ergebnis wird direkt in Register gespeichert
         
       when "001011" =>                  -- SLTIU
         alu_op <= "11";
+        reg_dst    <= '0';		  --in rt schreiben
+        branch     <= '0';          --kein Sprung
+        alu_src    <= '1';          --immediate-Wert nehmen
+        reg_write  <= '1';          --in Register schreiben
+        mem_write  <= '0';          --es muss nicht in Speicher geschrieben werden
+        mem_read   <= '0';          --es muss nicht aus Speicher gelesen werden
+        mem_to_reg <= '1';          --ALU-Ergebnis wird direkt in Register gespeichert
         
       when "001100" =>                  -- ANDI
         alu_op <= "11";
@@ -202,7 +216,7 @@ begin  -- rtl
         reg_write  <= '1';          --in Register schreiben
         mem_write  <= '0';          --es muss nicht in Speicher geschrieben werden
         mem_read   <= '0';          --es muss nicht aus Speicher gelesen werden
-        mem_to_reg <= '0';          --ALU-Ergebnis wird direkt in Register gespeichert
+        mem_to_reg <= '1';          --ALU-Ergebnis wird direkt in Register gespeichert
       when "001101" =>                  -- ORI
         alu_op <= "11";
         reg_dst    <= '0';		  --in rt schreiben
@@ -211,7 +225,7 @@ begin  -- rtl
         reg_write  <= '1';          --in Register schreiben
         mem_write  <= '0';          --es muss nicht in Speicher geschrieben werden
         mem_read   <= '0';          --es muss nicht aus Speicher gelesen werden
-        mem_to_reg <= '0';          --ALU-Ergebnis wird direkt in Register gespeichert
+        mem_to_reg <= '1';          --ALU-Ergebnis wird direkt in Register gespeichert
       when "001110" =>                  -- XORI
         alu_op <= "11";
         reg_dst    <= '0';		  --in rt schreiben
@@ -220,7 +234,7 @@ begin  -- rtl
         reg_write  <= '1';          --in Register schreiben
         mem_write  <= '0';          --es muss nicht in Speicher geschrieben werden
         mem_read   <= '0';          --es muss nicht aus Speicher gelesen werden
-        mem_to_reg <= '0';          --ALU-Ergebnis wird direkt in Register gespeichert
+        mem_to_reg <= '1';          --ALU-Ergebnis wird direkt in Register gespeichert
       when "001111" =>                  -- LUI
         alu_op <= "11";
 

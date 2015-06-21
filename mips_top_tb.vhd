@@ -129,7 +129,7 @@ BEGIN
 		rst_in <= '0';	
 		
 		--#############################################
-		--# add immediate test
+		--# ADDI test Takt1
 		--#############################################
 		opcode		:= "001000";			--addi
 		rs 			:= "00000";				--operand 1
@@ -138,16 +138,101 @@ BEGIN
 		
 		instruction_in <= opcode & rs & rt & immediate;	
 		
-		--4 mal nop ()
 		wait for 10 ns;
-		instruction_in <= x"00000000";
-		wait for 10 ns;
-		instruction_in <= x"00000000";
-		wait for 10 ns;
-		instruction_in <= x"00000000";
-		wait for 10 ns;
-		instruction_in <= x"00000000";
+		--#############################################
+		--# ADDIU test Takt2
+		--#############################################
+		--TODO: guten Testcase ausdenken
+		opcode		:= "001001";			--addiu
+		rs 			:= "00000";				--operand 1
+		rt				:= "00010";				--soll in register 2
+		immediate	:= x"EBCD";
 		
+		instruction_in <= opcode & rs & rt & immediate;	
+		wait for 10 ns;
+		--#############################################
+		--# SLTI Test 1 Takt3
+		--#############################################
+		opcode		:= "001010";			--sltu
+		rs 			:= "00000";				--operand 1
+		rt				:= "00011";				--soll in register 3
+		immediate	:= x"EBCD";
+		
+		instruction_in <= opcode & rs & rt & immediate;	
+		wait for 10 ns;
+		--#############################################
+		--# SLTI Test 2 Takt4
+		--#############################################
+		opcode		:= "001010";			--sltu
+		rs 			:= "00000";				--operand 1
+		rt				:= "00100";				--soll in register 4
+		immediate	:= x"0000";
+		
+		instruction_in <= opcode & rs & rt & immediate;	
+		wait for 10 ns;
+		instruction_in <= x"00000000";
+		wait for 10 ns;
+		--#############################################
+		--# ANDII Test 1 Takt 5
+		--#############################################
+		opcode		:= "001100";			--andi
+		rs 			:= "00001";				--operand 1
+		rt				:= "00101";				--soll in register 5
+		immediate	:= x"1111";
+		
+		instruction_in <= opcode & rs & rt & immediate;	
+		wait for 10ns;
+		--#############################################
+		--# ANDII Test 1 Takt 6
+		--#############################################
+		opcode		:= "001100";			--andi
+		rs 			:= "00001";				--operand 1
+		rt				:= "00110";				--soll in register 6
+		immediate	:= x"0000";
+		
+		instruction_in <= opcode & rs & rt & immediate;	
+		wait for 10ns;
+		--#############################################
+		--# ORI Test 1 Takt 7
+		--#############################################
+		opcode		:= "001101";			--ori
+		rs 			:= "00001";				--operand 1
+		rt				:= "00111";				--soll in register 7
+		immediate	:= x"0000";
+		
+		instruction_in <= opcode & rs & rt & immediate;	
+		wait for 10 ns;
+		--#############################################
+		--# ORI Test 1 Takt 8
+		--#############################################
+		opcode		:= "001101";			--ori
+		rs 			:= "00001";				--operand 1
+		rt				:= "01000";				--soll in register 8
+		immediate	:= x"FFFF";
+		
+		instruction_in <= opcode & rs & rt & immediate;	
+		wait for 10 ns;
+		--#############################################
+		--# XORI Test 1 Takt 9
+		--#############################################
+		opcode		:= "001110";			--ori
+		rs 			:= "00001";				--operand 1
+		rt				:= "01001";				--soll in register 9
+		immediate	:= x"0000";
+		
+		instruction_in <= opcode & rs & rt & immediate;	
+		wait for 10 ns;
+		--#############################################
+		--# XORI Test 1 Takt 10
+		--#############################################
+		opcode		:= "001110";			--ori
+		rs 			:= "00001";				--operand 1
+		rt				:= "01010";				--soll in register 10
+		immediate	:= x"FFFF";
+		
+		instruction_in <= opcode & rs & rt & immediate;	
+		wait for 10 ns;
+		instruction_in <= x"00000000";
 --		--#############################################
 --		--# load upper immediate test
 --		--#############################################

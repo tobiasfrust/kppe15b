@@ -78,21 +78,21 @@ begin
 		elsif std_match(temp, "10101011") then
 			alu_control_sig <= ALU_CMD_SLTU;
 		--immediate-befehle
-		elsif (alu_op = "11") AND (instruction = "001100") then
+		elsif (alu_op = "11") AND (instruction = "001100") then --ANDI
 			alu_control_sig <= ALU_CMD_AND;
-		elsif (alu_op = "11") AND (instruction = "001101") then
+		elsif (alu_op = "11") AND (instruction = "001101") then --ORI
 			alu_control_sig <= ALU_CMD_OR;
-		elsif (alu_op = "11") AND (instruction = "001110") then
+		elsif (alu_op = "11") AND (instruction = "001110") then --XORI
 			alu_control_sig <= ALU_CMD_XOR;
-		elsif (alu_op = "11") AND (instruction = "001010") then
+		elsif (alu_op = "11") AND (instruction = "001010") then --SLTI
 			alu_control_sig <= ALU_CMD_SLT;
-		elsif (alu_op = "11") AND (instruction = "001011") then
+		elsif (alu_op = "11") AND (instruction = "001011") then --SLTIU
 			alu_control_sig <= ALU_CMD_SLTU;
-		elsif (alu_op = "11") AND (instruction = "001000") then
+		elsif (alu_op = "11") AND (instruction = "001000") then --ADDI
 			alu_control_sig <= ALU_CMD_ADD;
-		elsif (alu_op = "11") AND (instruction = "001001") then
+		elsif (alu_op = "11") AND (instruction = "001001") then --ADDIU
 			alu_control_sig <= ALU_CMD_ADDU;
-			
+		--todo: load upper immediate ??
 		else
 			alu_control_sig <= ALU_CMD_DNTC;
 		end if;
