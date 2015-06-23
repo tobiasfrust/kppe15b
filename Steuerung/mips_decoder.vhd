@@ -32,8 +32,8 @@ use work.mips.all;
 --###############################################################################################
 --# Es gibt 4 Befehlsklassen: R-Befehle, Speicherbefehle, Branch, Jump
 --#
---# aluOp 00: Speicherbefehle (Alu führt Addition aus)
---# aluOp 10: Branch (Alu führt Subtraktion zb für beq aus)
+--# aluOp 00: Speicherbefehle (Alu fhrt Addition aus)
+--# aluOp 10: Branch (Alu fhrt Subtraktion zb fr beq aus)
 --# aluOp 10: R-Befehle (Alu Operation durch funct bestimmt)
 --# aluOp 11: Immediate Befehle (Instruction bestimmt Alu Operation, weil funct Feld fehlt)
 --###############################################################################################
@@ -78,13 +78,14 @@ begin  -- rtl
 
         -- Function code dependent assignments follow now.
         case insn(5 downto 0) is
-          when "000000" =>              -- SLL
+          when "000000" =>               -- SLL
             alu_op     <= "10";          -- R-Befehl
             alu_src    <= '1';           --shamt-Wert wird bentigt
             reg_dst    <= '1';           --in rd schreiben
             reg_write  <= '1';           --in Register schreiben
+				mem_to_reg <= '1';
             branch     <= '0';           --kein Sprung
-          when "000010" =>              -- SRL
+          when "000010" =>               -- SRL
             alu_op    <= "10";
             alu_src    <= '1';           --shamt-Wert wird bentigt
             reg_dst    <= '1';           --in rd schreiben

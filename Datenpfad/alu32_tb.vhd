@@ -25,8 +25,13 @@
 -- to guarantee that the testbench will bind correctly to the post-implementation 
 -- simulation model.
 --------------------------------------------------------------------------------
-LIBRARY ieee;
-USE ieee.std_logic_1164.ALL;
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+use IEEE.NUMERIC_STD.ALL;
+use work.mips.all;
+
  
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -85,19 +90,100 @@ BEGIN
 	  WAIT FOR 10ns;
      
 	-- create stimuli
-	  A <= x"000A3F6D";
-	  B <= x"0006FD5A";
-	  CTRL <= "0010";
-	  WAIT FOR 1ns;
-	  assert (S = x"00113CC7") report "Add falsch" severity error;
-	  CTRL <= "0110";
-	  WAIT FOR 1ns;
-	  assert (S = x"000339A3") report "Sub falsch" severity error;
-	  CTRL <= "0110";
-	  WAIT FOR 1ns;
-	  assert (S = x"000339A3") report "Sub falsch" severity error;
+	  A <= x"00000011";
+	  B <= x"00000001";
+	  
+	  
+	  
+	  
+--	  CTRL <= "0010";
+--	  WAIT FOR 1ns;
+--	  assert (S = x"00113CC7") report "Add falsch" severity error;
+--	  CTRL <= "0110";
+--	  WAIT FOR 1ns;
+--	  assert (S = x"000339A3") report "Sub falsch" severity error;
+--	  CTRL <= "0110";
+--	  WAIT FOR 1ns;
+--	  assert (S = x"000339A3") report "Sub falsch" severity error;
 
-     
+
+
+
+
+     CTRL <= ALU_CMD_AND;
+	  WAIT FOR 1ns;
+	  assert (S = x"00000001") report "AND falsch" severity error;
+	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+     CTRL <= ALU_CMD_OR;
+	  WAIT FOR 1ns;
+	  assert (S = x"00000011") report "OR falsch" severity error;
+	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+	  CTRL <= ALU_CMD_XOR;
+	  WAIT FOR 1ns;
+	  assert (S = x"00000010") report "XOR falsch" severity error;
+	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+	  CTRL <= ALU_CMD_ADDU;
+	  WAIT FOR 1ns;
+	  assert (S = x"00000100") report "ADDUfalsch" severity error;
+	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+	  CTRL <= ALU_CMD_SUBU;
+	  WAIT FOR 1ns;
+	  assert (S = x"00000010") report "SUBU falsch" severity error;
+	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+     CTRL <= ALU_CMD_NOR;
+	  WAIT FOR 1ns;
+	  assert (S = x"11111100") report "NOR falsch" severity error;
+	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+	  CTRL <= ALU_CMD_LUI;
+	  WAIT FOR 1ns;
+	  assert (S = x"00010000") report "LUI falsch" severity error;
+	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;	  
+	  
+	  A <= x"00000001";
+	  B <= x"00000011";
+     CTRL <= ALU_CMD_SLTU;
+	  WAIT FOR 1ns;
+	  assert (S = x"00000001") report "SLTU falsch" severity error;
+	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+	  	  
+	  A <= x"00000001";
+	  B <= x"80000001";
+	  CTRL <= ALU_CMD_ADD;
+	  WAIT FOR 1ns;
+	  assert (S = x"00000000") report "ADD falsch" severity error;
+	  assert (ZERO = '1') report "Zero-Flag funktioniert nicht" severity error;
+	  CTRL <= ALU_CMD_SUB;
+	  WAIT FOR 1ns;
+	  assert (S = x"00000010") report "SUB falsch" severity error;
+	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+	  
+	  A <= x"00000010";
+	  B <= x"00000100";
+	  CTRL <= ALU_CMD_SLL;
+	  WAIT FOR 1ns;
+	  assert (S = x"00000100") report "SLL falsch" severity error;
+	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+     CTRL <= ALU_CMD_SRL;
+	  WAIT FOR 1ns;
+	  assert (S = x"00000001") report "SRL falsch" severity error;
+	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+	  
+	  A <= x"80000001";
+	  B <= x"00000001";
+	  CTRL <= ALU_CMD_SLT;
+	  WAIT FOR 1ns;
+	  assert (S = x"00000001") report "SLT falsch" severity error;
+	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+	  
+	  A <= x"80000000";
+	  B <= x"00000100";
+	  CTRL <= ALU_CMD_SRA;
+	  WAIT FOR 1ns;
+	  assert (S = x"F8000000") report "SRA falsch" severity error;
+	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+	  
+	  
+	  
 
       wait;
    end process;

@@ -30,7 +30,7 @@ end entity mips_lsu_wb_tb;
 architecture sim of mips_lsu_wb_tb is
 
   -- component generics
-  constant WB_O_REG : boolean := false;
+  constant WB_O_REG : boolean := true;
   constant WB_I_REG : boolean := false;
 
   -- component ports

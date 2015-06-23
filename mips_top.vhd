@@ -39,7 +39,7 @@ entity mips_top is
 			pc_inc_in         	: in STD_LOGIC_VECTOR (31 downto 0);				--!!!hier ungenutzt!!!
 				  
 			--out					   		
-			pc_src 		   	: out STD_LOGIC;												--ausgang fr den muxer vor dem program counter, der bei sprung die quelle auswhlt
+			pc_src 		   	: out STD_LOGIC;			--ausgang fr den muxer vor dem program counter, der bei sprung die quelle auswhlt
 																										--!!!hier ungenutzt!!!
 			--############################################
 			--#	wishbone signale
@@ -53,7 +53,16 @@ entity mips_top is
 			wb_we_out		: out STD_LOGIC;
 			wb_sel_out 		: out STD_LOGIC_VECTOR (3 downto 0);	
 			wb_strobe_out  	: out STD_LOGIC;					
-			wb_cyc_out  		: out STD_LOGIC);
+			wb_cyc_out  		: out STD_LOGIC;
+			
+			--############################################
+			--#	testbench signale
+			--############################################	
+			test_write_data_in : out std_logic_vector(31 downto 0);
+			test_write_address_in : out std_logic_vector(4 downto 0);
+			test_reg_write : out std_logic);
+			
+			
 end mips_top;
 
 architecture Behavioral of mips_top is
@@ -113,7 +122,11 @@ begin
 					wb_we_out	 				=>	wb_we_out, 		
 					wb_sel_out 					=> wb_sel_out,  	
 					wb_strobe_out 				=> wb_strobe_out,					
-					wb_cyc_out  			 	=> wb_cyc_out );
+					wb_cyc_out  			 	=> wb_cyc_out,
+					--Testsignale
+					test_write_address_in   => test_write_address_in,
+					test_write_data_in      => test_write_data_in,
+					test_reg_write          => test_reg_write);
 
 end Behavioral;
 

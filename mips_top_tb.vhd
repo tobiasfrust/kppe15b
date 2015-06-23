@@ -53,8 +53,13 @@ ARCHITECTURE behavior OF mips_top_tb IS
          wb_we_out : OUT  std_logic;
          wb_sel_out : OUT  std_logic_vector(3 downto 0);
          wb_strobe_out : OUT  std_logic;
-         wb_cyc_out : OUT  std_logic
-        );
+         wb_cyc_out : OUT  std_logic;
+			--############################################
+			--#	testbench signale
+			--############################################	
+			test_write_data_in : out std_logic_vector(31 downto 0);
+			test_write_address_in : out std_logic_vector(4 downto 0);
+			test_reg_write : out std_logic);
     END COMPONENT;
     
 
@@ -74,6 +79,13 @@ ARCHITECTURE behavior OF mips_top_tb IS
    signal wb_sel_out : std_logic_vector(3 downto 0);
    signal wb_strobe_out : std_logic;
    signal wb_cyc_out : std_logic;
+	
+	--############################################
+	--#	testbench signale
+	--############################################	
+	signal test_write_data_in : std_logic_vector(31 downto 0);
+	signal test_write_address_in : std_logic_vector(4 downto 0);
+	signal test_reg_write : std_logic;
 
    -- Clock period definitions
    constant clk_in_period : time := 10 ns;
@@ -94,7 +106,10 @@ BEGIN
           wb_we_out => wb_we_out,
           wb_sel_out => wb_sel_out,
           wb_strobe_out => wb_strobe_out,
-          wb_cyc_out => wb_cyc_out
+          wb_cyc_out => wb_cyc_out,
+			 test_write_address_in => test_write_address_in,
+			 test_write_data_in => test_write_data_in,
+			 test_reg_write => test_reg_write
         );
 
    -- Clock process definitions
@@ -143,7 +158,7 @@ BEGIN
 		
 		instruction_in <= opcode & rs & rt & immediate;	
 		
-		wait for 10 ns;
+		wait until rising_edge(clk_in);
 		--#############################################
 		--# ADDIU test Takt2
 		--#############################################
@@ -154,29 +169,27 @@ BEGIN
 		immediate	:= x"EBCD";
 		
 		instruction_in <= opcode & rs & rt & immediate;	
-		wait for 10 ns;
+		wait until rising_edge(clk_in);
 		--#############################################
 		--# SLTI Test 1 Takt3
 		--#############################################
-		opcode		:= "001010";			--sltu
+		opcode		:= "001010";			--slti
 		rs 			:= "00000";				--operand 1
 		rt				:= "00011";				--soll in register 3
 		immediate	:= x"EBCD";
 		
 		instruction_in <= opcode & rs & rt & immediate;	
-		wait for 10 ns;
+		wait until rising_edge(clk_in);
 		--#############################################
 		--# SLTI Test 2 Takt4
 		--#############################################
-		opcode		:= "001010";			--sltu
+		opcode		:= "001010";			--slti
 		rs 			:= "00000";				--operand 1
 		rt				:= "00100";				--soll in register 4
 		immediate	:= x"0000";
 		
 		instruction_in <= opcode & rs & rt & immediate;	
-		wait for 10 ns;
-		instruction_in <= x"00000000";
-		wait for 10 ns;
+		wait until rising_edge(clk_in);
 		--#############################################
 		--# ANDII Test 1 Takt 5
 		--#############################################
@@ -186,7 +199,13 @@ BEGIN
 		immediate	:= x"1111";
 		
 		instruction_in <= opcode & rs & rt & immediate;	
-		wait for 10ns;
+		
+		wait for 2 ns;
+		assert test_write_address_in = "00001" report "Adresse falsch angelegt!, ADDI" severity error;
+		assert test_write_data_in = x"FFFFABCD" report "Falsches Datum berechnet!, ADDI" severity error;
+		assert test_reg_write = '1' report "Wert wird nicht in Register geschrieben!, ADDI" severity error;
+
+		wait until rising_edge(clk_in);
 		--#############################################
 		--# ANDII Test 1 Takt 6
 		--#############################################
@@ -196,7 +215,13 @@ BEGIN
 		immediate	:= x"0000";
 		
 		instruction_in <= opcode & rs & rt & immediate;	
-		wait for 10ns;
+		
+		wait for 2 ns;
+		assert test_write_address_in = "00010" report "Adresse falsch angelegt!, ADDIU" severity error;
+		assert test_write_data_in = x"FFFFEBCD" report "Falsches Datum berechnet!, ADDIU" severity error;
+		assert test_reg_write = '1' report "Wert wird nicht in Register geschrieben!, ADDIU" severity error;
+		
+		wait until rising_edge(clk_in);
 		--#############################################
 		--# ORI Test 1 Takt 7
 		--#############################################
@@ -206,7 +231,13 @@ BEGIN
 		immediate	:= x"0000";
 		
 		instruction_in <= opcode & rs & rt & immediate;	
-		wait for 10 ns;
+		
+		wait for 2 ns;
+		assert test_write_address_in = "00011" report "Adresse falsch angelegt!, SLTI" severity error;
+		assert test_write_data_in = x"00000000" report "Falsches Datum berechnet!, SLTI" severity error;
+		assert test_reg_write = '1' report "Wert wird nicht in Register geschrieben!, SLTI" severity error;
+		
+		wait until rising_edge(clk_in);
 		--#############################################
 		--# ORI Test 1 Takt 8
 		--#############################################
@@ -216,7 +247,13 @@ BEGIN
 		immediate	:= x"FFFF";
 		
 		instruction_in <= opcode & rs & rt & immediate;	
-		wait for 10 ns;
+		
+		wait for 2 ns;
+		assert test_write_address_in = "00100" report "Adresse falsch angelegt!, SLTI" severity error;
+		assert test_write_data_in = x"00000000" report "Falsches Datum berechnet!, SLTI" severity error;
+		assert test_reg_write = '1' report "Wert wird nicht in Register geschrieben!, SLTI" severity error;
+		
+		wait until rising_edge(clk_in);
 		--#############################################
 		--# XORI Test 1 Takt 9
 		--#############################################
@@ -226,9 +263,15 @@ BEGIN
 		immediate	:= x"0000";
 		
 		instruction_in <= opcode & rs & rt & immediate;	
-		wait for 10 ns;
+		
+		wait for 2 ns;
+		assert test_write_address_in = "00101" report "Adresse falsch angelegt!, ANDI" severity error;
+		assert test_write_data_in = (x"00001111" and x"ffffabcd") report "Falsches Datum berechnet!, ANDI" severity error;
+		assert test_reg_write = '1' report "Wert wird nicht in Register geschrieben!, ANDI" severity error;
+		
+		wait until rising_edge(clk_in);
 		--#############################################
-		--# XORI Test 1 Takt 10
+		--# XORI Test 2 Takt 10
 		--#############################################
 		opcode		:= "001110";			--ori
 		rs 			:= "00001";				--operand 1
@@ -236,8 +279,19 @@ BEGIN
 		immediate	:= x"FFFF";
 		
 		instruction_in <= opcode & rs & rt & immediate;	
-		wait for 10 ns;
-		instruction_in <= x"00000000";
+		wait until rising_edge(clk_in);
+		--#############################################
+		--# SLL Test 2 Takt 11
+		--#############################################
+		opcode		:= "000000";			--ori
+		rs 			:= "00000";				--operand 1
+		rt				:= "00001";				
+		rd          := "01011";
+		shamt       := "00001";
+		funct       := "000000";
+		
+		instruction_in <= opcode & rs & rt & rd &shamt & funct;	
+		wait until rising_edge(clk_in);
 --		--#############################################
 --		--# load upper immediate test
 --		--#############################################
