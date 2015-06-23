@@ -29,6 +29,15 @@ use ieee.numeric_std.all;
 
 use work.mips.all;
 
+--###############################################################################################
+--# Es gibt 4 Befehlsklassen: R-Befehle, Speicherbefehle, Branch, Jump
+--#
+--# aluOp 00: Speicherbefehle (Alu führt Addition aus)
+--# aluOp 10: Branch (Alu führt Subtraktion zb für beq aus)
+--# aluOp 10: R-Befehle (Alu Operation durch funct bestimmt)
+--# aluOp 11: Immediate Befehle (Instruction bestimmt Alu Operation, weil funct Feld fehlt)
+--###############################################################################################
+
 entity mips_decoder is
   
   port (
@@ -200,7 +209,7 @@ begin  -- rtl
         
       when "001011" =>                  -- SLTIU
         alu_op <= "11";
-        reg_dst    <= '0';		  --in rt schreiben
+        reg_dst    <= '0';		  		--in rt schreiben
         branch     <= '0';          --kein Sprung
         alu_src    <= '1';          --immediate-Wert nehmen
         reg_write  <= '1';          --in Register schreiben
@@ -210,7 +219,7 @@ begin  -- rtl
         
       when "001100" =>                  -- ANDI
         alu_op <= "11";
-        reg_dst    <= '0';		  --in rt schreiben
+        reg_dst    <= '0';		 		--in rt schreiben
         branch     <= '0';          --kein Sprung
         alu_src    <= '1';          --immediate-Wert nehmen
         reg_write  <= '1';          --in Register schreiben
@@ -219,7 +228,7 @@ begin  -- rtl
         mem_to_reg <= '1';          --ALU-Ergebnis wird direkt in Register gespeichert
       when "001101" =>                  -- ORI
         alu_op <= "11";
-        reg_dst    <= '0';		  --in rt schreiben
+        reg_dst    <= '0';		  		--in rt schreiben
         branch     <= '0';          --kein Sprung
         alu_src    <= '1';          --immediate-Wert nehmen
         reg_write  <= '1';          --in Register schreiben
@@ -228,7 +237,7 @@ begin  -- rtl
         mem_to_reg <= '1';          --ALU-Ergebnis wird direkt in Register gespeichert
       when "001110" =>                  -- XORI
         alu_op <= "11";
-        reg_dst    <= '0';		  --in rt schreiben
+        reg_dst    <= '0';		  		--in rt schreiben
         branch     <= '0';          --kein Sprung
         alu_src    <= '1';          --immediate-Wert nehmen
         reg_write  <= '1';          --in Register schreiben
@@ -237,7 +246,13 @@ begin  -- rtl
         mem_to_reg <= '1';          --ALU-Ergebnis wird direkt in Register gespeichert
       when "001111" =>                  -- LUI
         alu_op <= "11";
-
+		  reg_dst    <= '0';		  		--in rt schreiben
+        branch     <= '0';          --kein Sprung
+        alu_src    <= '1';          --immediate-Wert nehmen
+        reg_write  <= '1';          --in Register schreiben
+        mem_write  <= '0';          --es muss nicht in Speicher geschrieben werden
+        mem_read   <= '0';          --es muss nicht aus Speicher gelesen werden
+        mem_to_reg <= '1';          --ALU-Ergebnis wird direkt in Register gespeichert
         -----------------------------------------------------------------------
       when "100011" =>                  -- LW
         --TODO: alu_cmd <= ...;

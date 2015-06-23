@@ -38,6 +38,7 @@ PORT (
 	CTRL : IN std_logic_vector(3 DOWNTO 0);
 	A, B : IN std_logic_vector(31 DOWNTO 0);
 	S : OUT std_logic_vector(31 DOWNTO 0);
+	--TODO: zero ausgang implementieren
 	ZERO : OUT std_logic);
 	
 END alu32;
