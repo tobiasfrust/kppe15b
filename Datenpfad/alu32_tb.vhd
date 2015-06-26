@@ -50,8 +50,7 @@ ARCHITECTURE behavior OF alu32_tb IS
 			A : IN  std_logic_vector(31 downto 0);
 			B : IN  std_logic_vector(31 downto 0);
 			S : OUT  std_logic_vector(31 downto 0);
-			ZERO : IN  std_logic;
-         COUT : IN  std_logic
+			ZERO : OUT  std_logic
         );
     END COMPONENT;
     
@@ -61,7 +60,6 @@ ARCHITECTURE behavior OF alu32_tb IS
    signal A : std_logic_vector(31 downto 0) := (others => '0');
    signal B : std_logic_vector(31 downto 0) := (others => '0');
    signal ZERO : std_logic := '0';
-   signal COUT : std_logic := '0';
 
  	--Outputs
    signal S : std_logic_vector(31 downto 0);
@@ -76,8 +74,7 @@ BEGIN
           A => A,
           B => B,
           S => S,
-          ZERO => ZERO,
-          COUT => COUT
+          ZERO => ZERO
         );
 
    -- Stimulus process
@@ -95,49 +92,41 @@ BEGIN
 	  
 	  
 	  
-	  
---	  CTRL <= "0010";
---	  WAIT FOR 1ns;
---	  assert (S = x"00113CC7") report "Add falsch" severity error;
---	  CTRL <= "0110";
---	  WAIT FOR 1ns;
---	  assert (S = x"000339A3") report "Sub falsch" severity error;
---	  CTRL <= "0110";
---	  WAIT FOR 1ns;
---	  assert (S = x"000339A3") report "Sub falsch" severity error;
-
-
-
-
-
-     CTRL <= ALU_CMD_AND;
+	  CTRL <= ALU_CMD_AND;
 	  WAIT FOR 1ns;
 	  assert (S = x"00000001") report "AND falsch" severity error;
 	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+	  WAIT FOR 1ns;
      CTRL <= ALU_CMD_OR;
 	  WAIT FOR 1ns;
 	  assert (S = x"00000011") report "OR falsch" severity error;
 	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+	  WAIT FOR 1ns;
 	  CTRL <= ALU_CMD_XOR;
 	  WAIT FOR 1ns;
 	  assert (S = x"00000010") report "XOR falsch" severity error;
 	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+	  WAIT FOR 1ns;
 	  CTRL <= ALU_CMD_ADDU;
 	  WAIT FOR 1ns;
-	  assert (S = x"00000100") report "ADDUfalsch" severity error;
+	  assert (S = x"00000012") report "ADDUfalsch" severity error;
 	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+	  WAIT FOR 1ns;
 	  CTRL <= ALU_CMD_SUBU;
 	  WAIT FOR 1ns;
 	  assert (S = x"00000010") report "SUBU falsch" severity error;
 	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+	  WAIT FOR 1ns;
      CTRL <= ALU_CMD_NOR;
 	  WAIT FOR 1ns;
-	  assert (S = x"11111100") report "NOR falsch" severity error;
+	  assert (S = x"FFFFFFEE") report "NOR falsch" severity error;
 	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+	  WAIT FOR 1ns;
 	  CTRL <= ALU_CMD_LUI;
 	  WAIT FOR 1ns;
 	  assert (S = x"00010000") report "LUI falsch" severity error;
-	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;	  
+	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+	  WAIT FOR 1ns;	  
 	  
 	  A <= x"00000001";
 	  B <= x"00000011";
@@ -145,17 +134,20 @@ BEGIN
 	  WAIT FOR 1ns;
 	  assert (S = x"00000001") report "SLTU falsch" severity error;
 	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+	  WAIT FOR 1ns;
 	  	  
 	  A <= x"00000001";
-	  B <= x"80000001";
+	  B <= x"FFFFFFFE";
 	  CTRL <= ALU_CMD_ADD;
 	  WAIT FOR 1ns;
-	  assert (S = x"00000000") report "ADD falsch" severity error;
-	  assert (ZERO = '1') report "Zero-Flag funktioniert nicht" severity error;
+	  assert (S = x"FFFFFFFF") report "ADD falsch" severity error;
+	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+	  WAIT FOR 1ns;
 	  CTRL <= ALU_CMD_SUB;
 	  WAIT FOR 1ns;
-	  assert (S = x"00000010") report "SUB falsch" severity error;
+	  assert (S = x"00000003") report "SUB falsch" severity error;
 	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+	  WAIT FOR 1ns;
 	  
 	  A <= x"00000010";
 	  B <= x"00000100";
@@ -163,10 +155,12 @@ BEGIN
 	  WAIT FOR 1ns;
 	  assert (S = x"00000100") report "SLL falsch" severity error;
 	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+	  WAIT FOR 1ns;
      CTRL <= ALU_CMD_SRL;
 	  WAIT FOR 1ns;
 	  assert (S = x"00000001") report "SRL falsch" severity error;
 	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+	  WAIT FOR 1ns;
 	  
 	  A <= x"80000001";
 	  B <= x"00000001";
@@ -174,6 +168,7 @@ BEGIN
 	  WAIT FOR 1ns;
 	  assert (S = x"00000001") report "SLT falsch" severity error;
 	  assert (ZERO = '0') report "Zero-Flag funktioniert nicht" severity error;
+	  WAIT FOR 1ns;
 	  
 	  A <= x"80000000";
 	  B <= x"00000100";
