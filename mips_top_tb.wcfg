@@ -3,7 +3,7 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="/home/kppe15b/MIPS_kppe15b/mips_top_tb_isim_beh.wdb" id="1" type="auto">
+      <db_ref path="C:/Users/Alex/Xilinx/SysGen/14.7/MIPS/mips_top_tb_isim_beh.wdb" id="1" type="auto">
          <top_modules>
             <top_module name="mips" />
             <top_module name="mips_top_tb" />
@@ -12,7 +12,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="50" />
+   <WVObjectSize size="51" />
    <wvobject fp_name="/mips_top_tb/instruction_in" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">instruction_in[31:0]</obj_property>
       <obj_property name="ObjectShortName">instruction_in[31:0]</obj_property>
@@ -75,6 +75,10 @@
          <obj_property name="ElementShortName">wb_we_out</obj_property>
          <obj_property name="ObjectShortName">wb_we_out</obj_property>
       </wvobject>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">registers[31:0]</obj_property>
+      <obj_property name="ObjectShortName">registers[31:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/mips_top_tb/clk_in_period" type="other" db_ref_id="1">
       <obj_property name="ElementShortName">clk_in_period</obj_property>
