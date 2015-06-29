@@ -45,7 +45,7 @@ ARCHITECTURE behavior OF data_storage_tb IS
          write_data_in : IN  std_logic_vector(31 downto 0);
          clk_in : IN  std_logic;
          mem_read_in : IN  std_logic;
-         mem_write_in : IN  std_logic;
+         mem_write_in : IN  std_logic; 
          rst_in : IN  std_logic;
          wb_dat_in : IN  std_logic_vector(31 downto 0);
          wb_ack_in : IN  std_logic;

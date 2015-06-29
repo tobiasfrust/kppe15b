@@ -77,7 +77,7 @@ entity hazard_control_all is
 			IDEX_branch_cond_out : out STD_LOGIC;
 			--wb
 			IDEX_mem_to_reg_out : out STD_LOGIC;
-			IDEX_reg_write_out : out STD_LOGIC);
+			IDEX_reg_write_out : out STD_LOGIC;
 			
 			-- EXMEM_MUX-Ausgänge
 			--mem
@@ -87,7 +87,7 @@ entity hazard_control_all is
 			EXMEM_branch_cond_out : out STD_LOGIC;
 			--wb
 			EXMEM_mem_to_reg_out : out STD_LOGIC;
-			EXMEM_reg_write_out : out STD_LOGIC);
+			EXMEM_reg_write_out : out STD_LOGIC;
 			
 			-- MEMWB_MUX-Ausgänge
 			--wb
