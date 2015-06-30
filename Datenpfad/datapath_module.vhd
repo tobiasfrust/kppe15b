@@ -67,7 +67,15 @@ entity datapath_module is
 			   wb_we_out		: out STD_LOGIC;
 			   wb_sel_out 		: out STD_LOGIC_VECTOR (3 downto 0);	
 			   wb_strobe_out  	: out STD_LOGIC;					
-			   wb_cyc_out  		: out STD_LOGIC);
+			   wb_cyc_out  		: out STD_LOGIC;
+				
+			--############################################
+			--#	testbench signale
+			--############################################	
+			test_write_data_in : out std_logic_vector(31 downto 0);
+			test_write_address_in : out std_logic_vector(4 downto 0);
+			test_reg_write : out std_logic);
+			
 end datapath_module;
 
 	----------------------------------------------------------------------------------------------------------
@@ -341,6 +349,9 @@ begin
 	----------------------------------------------------------------------------------------------------------			  
 	instruction_out <= ifid_instruc_out;												--geht nach ifid_reg an steuerwerk
 	pc_src <= exmem_branch_out AND alu_zero_out;
+	test_write_address_in <= memwb_reg_dst_addr_out;
+	test_write_data_in    <= mem_to_reg_mux_out;
+	test_reg_write        <= memwb_reg_write_out;
 	
 end Behavioral;
 

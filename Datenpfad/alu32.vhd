@@ -38,7 +38,6 @@ PORT (
 	CTRL : IN std_logic_vector(3 DOWNTO 0);
 	A, B : IN std_logic_vector(31 DOWNTO 0);
 	S : OUT std_logic_vector(31 DOWNTO 0);
-	--TODO: zero ausgang implementieren
 	ZERO : OUT std_logic);
 	
 END alu32;
@@ -54,23 +53,46 @@ begin
 	end if;
 end;
 
+function to_lui (a : boolean) return STD_LOGIC_VECTOR is
+begin
+	if a then
+		return (31 DOWNTO 1 => '0') & '1';
+	else
+		return (31 DOWNTO 0 => '0');
+	end if;
+end;
+
+signal s_intern : std_logic_vector(31 DOWNTO 0);
+
 BEGIN
     PROCESS(A,B,CTRL)
     BEGIN	
         CASE CTRL IS
-           WHEN ALU_CMD_AND	=>   S <= A AND B;          															-- and
-           WHEN ALU_CMD_OR		=>   S <= A OR B;           															-- or
-			  WHEN ALU_CMD_XOR	=>   S <= A XOR B;          															-- XOR
-			  WHEN ALU_CMD_ADD	=>   S <= std_logic_vector(signed(A) + signed(B));            				-- add
-           WHEN ALU_CMD_ADDU  =>   S <= std_logic_vector(unsigned(A) + unsigned(B));            		-- addu
-			  WHEN ALU_CMD_SUB	=>   S <= std_logic_vector(signed(A) - signed(B));            				-- sub
-           WHEN ALU_CMD_SUBU  =>   S <= std_logic_vector(unsigned(A) - unsigned(B));            		-- subu
-           WHEN ALU_CMD_NOR	=>   S <= A NOR B;          															-- nor
-           WHEN ALU_CMD_SLL	=>   S <= std_logic_vector(unsigned(A) sll to_integer(unsigned(B)));    -- shift right
-           WHEN ALU_CMD_SRL	=>   S <= std_logic_vector(unsigned(A) srl to_integer(unsigned(B)));    -- shift left
-			  WHEN ALU_CMD_SLT	=>   S <= to_slv(signed(A) > signed(B));											-- set on less than
-				--TODO: SLTU, SRA, LUI
-           WHEN OTHERS			=>   S <= (OTHERS => '-');  															-- don't care for S
+           WHEN ALU_CMD_AND	=>   s_intern <= A AND B;          																					-- and
+           WHEN ALU_CMD_OR		=>   s_intern <= A OR B;           																					-- or
+			  WHEN ALU_CMD_XOR	=>   s_intern <= A XOR B;          																					-- XOR
+			  WHEN ALU_CMD_ADD	=>   s_intern <= std_logic_vector(signed(A) + signed(B));            									-- add
+           WHEN ALU_CMD_ADDU  =>   s_intern <= std_logic_vector(unsigned(A) + unsigned(B));            								-- addu
+			  WHEN ALU_CMD_SUB	=>   s_intern <= std_logic_vector(signed(A) - signed(B));            									-- sub
+           WHEN ALU_CMD_SUBU  =>   s_intern <= std_logic_vector(unsigned(A) - unsigned(B));            								-- subu
+           WHEN ALU_CMD_NOR	=>   s_intern <= A NOR B;          																					-- nor
+           WHEN ALU_CMD_SLL	=>   s_intern <= std_logic_vector(unsigned(A) sll to_integer(unsigned(B(10 DOWNTO 6))));			-- shift right
+           WHEN ALU_CMD_SRL	=>   s_intern <= std_logic_vector(unsigned(A) srl to_integer(unsigned(B(10 DOWNTO 6))));			-- shift left
+			  WHEN ALU_CMD_SLT	=>   s_intern <= to_slv(signed(A) < signed(B));																	-- set on less than
+			  WHEN ALU_CMD_SLTU	=>   s_intern <= to_slv(unsigned(A) < unsigned(B));															-- set less than unsigned
+			  WHEN ALU_CMD_SRA	=>   s_intern <= std_logic_vector(shift_right(signed(A),to_integer(unsigned(B(10 DOWNTO 6)))));	--to_integer(unsigned(B(10 DOWNTO 6))));		-- shift left
+			  WHEN ALU_CMD_LUI	=>   s_intern <= std_logic_vector((unsigned(B(15 DOWNTO 0))) & x"0000");								-- load upper immediate
+           WHEN OTHERS			=>   s_intern <= (OTHERS => '-');  																					-- don't care for S
         END CASE;
     END PROCESS;
+	 
+	 PROCESS(s_intern)	 
+    BEGIN
+	 ZERO <= '0';
+      IF (s_intern = x"00000000") THEN
+			ZERO <= '0';
+		END IF;
+	 S <= s_intern;	
+	 END PROCESS;
+	 
 END behavioural;
