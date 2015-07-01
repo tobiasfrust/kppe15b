@@ -101,7 +101,13 @@ begin
 			alu_control_sig <= ALU_CMD_ADD;
 		elsif (alu_op = "11") AND (instruction = "001001") then --ADDIU
 			alu_control_sig <= ALU_CMD_ADDU;
-		--todo: load upper immediate ??
+		elsif (alu_op = "11") AND (instruction = "001111") then --LUI
+			alu_control_sig <= ALU_CMD_LUI;
+		--load/store-Befehl
+		elsif (alu_op = "11") AND (instruction = "100011") then --LW
+			alu_control_sig <= ALU_CMD_ADDU;
+		elsif (alu_op = "11") AND (instruction = "101011") then --SW
+			alu_control_sig <= ALU_CMD_ADDU;
 		else
 			alu_control_sig <= ALU_CMD_DNTC;
 		end if;
