@@ -42,8 +42,7 @@ ARCHITECTURE behavior OF hazard_control_unit_tb IS
     COMPONENT hazard_control_unit
     PORT(
          EXMEM_alu_zero : IN  std_logic;
-         EXMEM_branch : IN  std_logic;
-         EXMEM_branch_cond : IN  std_logic;
+         EXMEM_branch : IN  std_logic_vector(1 downto 0);
          flush : OUT  std_logic
         );
     END COMPONENT;
@@ -51,8 +50,7 @@ ARCHITECTURE behavior OF hazard_control_unit_tb IS
 
    --Inputs
    signal EXMEM_alu_zero : std_logic := '0';
-   signal EXMEM_branch : std_logic := '0';
-   signal EXMEM_branch_cond : std_logic := '0';
+   signal EXMEM_branch : std_logic_vector(1 downto 0) := "00";
 
  	--Outputs
    signal flush : std_logic;
@@ -63,7 +61,6 @@ BEGIN
    uut: hazard_control_unit PORT MAP (
           EXMEM_alu_zero => EXMEM_alu_zero,
           EXMEM_branch => EXMEM_branch,
-          EXMEM_branch_cond => EXMEM_branch_cond,
           flush => flush
         ); 
 
@@ -75,57 +72,49 @@ BEGIN
 
       -- insert stimulus here
 		EXMEM_alu_zero			<= '0';
-		EXMEM_branch			<= '0';
-		EXMEM_branch_cond 	<= '0';
+		EXMEM_branch			<= "00";
 		WAIT FOR 1ns;
 		assert (flush= '1') report "flush ist falsch" severity error;
 		WAIT FOR 10ns;
 		
 		EXMEM_alu_zero			<= '0';
-		EXMEM_branch			<= '0';
-		EXMEM_branch_cond 	<= '1';
+		EXMEM_branch			<= "01";
 		WAIT FOR 1ns;
 		assert (flush= '0') report "flush ist falsch" severity error;
 		WAIT FOR 10ns;
 		
 		EXMEM_alu_zero			<= '0';
-		EXMEM_branch			<= '1';
-		EXMEM_branch_cond 	<= '0';
+		EXMEM_branch			<= "10";
 		WAIT FOR 1ns;
 		assert (flush= '0') report "flush ist falsch" severity error;
 		WAIT FOR 10ns;
 		
 		EXMEM_alu_zero			<= '0';
-		EXMEM_branch			<= '1';
-		EXMEM_branch_cond 	<= '1';
+		EXMEM_branch			<= "11";
 		WAIT FOR 1ns;
 		assert (flush= '0') report "flush ist falsch" severity error;
 		WAIT FOR 10ns;
 		
 		EXMEM_alu_zero			<= '1';
-		EXMEM_branch			<= '0';
-		EXMEM_branch_cond 	<= '0';
+		EXMEM_branch			<= "00";
 		WAIT FOR 1ns;
 		assert (flush= '0') report "flush ist falsch" severity error;
 		WAIT FOR 10ns;
 		
 		EXMEM_alu_zero			<= '1';
-		EXMEM_branch			<= '0';
-		EXMEM_branch_cond 	<= '1';
+		EXMEM_branch			<= "01";
 		WAIT FOR 1ns;
 		assert (flush= '0') report "flush ist falsch" severity error;
 		WAIT FOR 10ns;
 		
 		EXMEM_alu_zero			<= '1';
-		EXMEM_branch			<= '1';
-		EXMEM_branch_cond 	<= '0';
+		EXMEM_branch			<= "10";
 		WAIT FOR 1ns;
 		assert (flush= '0') report "flush ist falsch" severity error;
 		WAIT FOR 10ns;
 		
 		EXMEM_alu_zero			<= '1';
-		EXMEM_branch			<= '1';
-		EXMEM_branch_cond 	<= '1';
+		EXMEM_branch			<= "11";
 		WAIT FOR 1ns;
 		assert (flush= '1') report "flush ist falsch" severity error;
 		WAIT FOR 10ns;

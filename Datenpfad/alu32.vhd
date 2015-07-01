@@ -72,7 +72,7 @@ BEGIN
            WHEN ALU_CMD_OR		=>   s_intern <= A OR B;           																					-- or
 			  WHEN ALU_CMD_XOR	=>   s_intern <= A XOR B;          																					-- XOR
 			  WHEN ALU_CMD_ADD	=>   s_intern <= std_logic_vector(signed(A) + signed(B));            									-- add
-           WHEN ALU_CMD_ADDU  =>   s_intern <= std_logic_vector(unsigned(A) + unsigned(B));            								-- addu
+           WHEN ALU_CMD_ADDU  =>   s_intern <= std_logic_vector(signed(A) + signed(B));            									-- addu
 			  WHEN ALU_CMD_SUB	=>   s_intern <= std_logic_vector(signed(A) - signed(B));            									-- sub
            WHEN ALU_CMD_SUBU  =>   s_intern <= std_logic_vector(unsigned(A) - unsigned(B));            								-- subu
            WHEN ALU_CMD_NOR	=>   s_intern <= A NOR B;          																					-- nor

@@ -34,7 +34,7 @@ use work.mips.all;
 --# Es gibt 4 Befehlsklassen: R-Befehle, Speicherbefehle, Branch, Jump
 --#
 --# aluOp 00: Speicherbefehle (Alu führt Addition aus)
---# aluOp 10: Branch (Alu führt Subtraktion zb für beq aus)
+--# aluOp 01: Branch (Alu führt Subtraktion zb für beq aus)
 --# aluOp 10: R-Befehle (Alu Operation durch funct bestimmt)
 --# aluOp 11: Immediate Befehle (Instruction bestimmt Alu Operation, weil funct Feld fehlt)
 --###############################################################################################

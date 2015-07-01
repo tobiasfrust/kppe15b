@@ -37,6 +37,7 @@ entity ifid_pipeline_reg is
 			  --in steuersignale
 			  clk_in : in STD_LOGIC;
 			  pipeline_en_in : in STD_LOGIC;
+			  flush_in : in STD_LOGIC;
 			  
 			  --out			  
 			  program_counter_out : out  STD_LOGIC_VECTOR (31 downto 0);
@@ -50,8 +51,13 @@ begin
 	begin
 		if rising_edge(clk_in) then
 			if pipeline_en_in = '1' then
-				program_counter_out 	<= 	program_counter_in;
-				instruction_out 		<= 	instruction_in;
+				if flush_in = '1' then
+					program_counter_out 	<= 	program_counter_in;
+					instruction_out 		<= 	(others => '0');
+				else
+					program_counter_out 	<= 	program_counter_in;
+					instruction_out 		<= 	instruction_in;
+				end if;
 			end if;
 		end if;
 	end process;

@@ -45,7 +45,7 @@ entity exmem_pipeline_reg is
 			  --mem
            mem_write_in : in  STD_LOGIC;
            mem_read_in : in  STD_LOGIC;
-           branch_in : in  STD_LOGIC;
+           branch_in : in STD_LOGIC_VECTOR (1 downto 0);			-- 00: bne		11: beq		01: kein Sprun		10: normaler (unconditional) Jump
 			  --wb
            mem_to_reg_in : in  STD_LOGIC;
 			  reg_write_in : in STD_LOGIC;
@@ -61,7 +61,7 @@ entity exmem_pipeline_reg is
 			  --mem
            mem_write_out : out  STD_LOGIC;
            mem_read_out : out  STD_LOGIC;
-           branch_out : out  STD_LOGIC;
+           branch_out : out  STD_LOGIC_VECTOR (1 downto 0);
 			  --wb
            mem_to_reg_out : out  STD_LOGIC;
 			  reg_write_out : out STD_LOGIC);
