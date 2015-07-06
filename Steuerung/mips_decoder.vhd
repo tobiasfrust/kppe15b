@@ -49,7 +49,8 @@ entity mips_decoder is
     mem_to_reg : out std_logic;
     mem_write  : out std_logic;
     alu_src    : out std_logic;
-    reg_write  : out std_logic
+    reg_write  : out std_logic;
+	 pc_to_R31  : out std_logic
 	);
 
 end mips_decoder;
@@ -73,8 +74,9 @@ begin  -- rtl
 
         mem_write  <= '0';					--es muss nicht in Speicher geschrieben werden
         mem_read   <= '0';					--es muss nicht aus Speicher gelesen werden
-        mem_to_reg <= '0'; --standardmaessig wird das was der WB master ausgibt ins regfile gespeichert
+        mem_to_reg <= '0'; 				--standardmaessig wird das was der WB master ausgibt ins regfile gespeichert
 		  reg_write  <= '0'; 
+		  pc_to_R31  <= '0';					--standardmäßig wird der Pc nicht in R[31] geschrieben
 
         -- Function code dependent assignments follow now.
         case insn(5 downto 0) is
@@ -195,13 +197,14 @@ begin  -- rtl
 			reg_dst    <= '0';         --nicht in rd schreiben
 			branch     <= "10";		  	--unconditional Jump
 			alu_src    <= '0';         --Wert aus Register wird nicht bentigt
-			reg_write  <= '0';         --nicht in Register schreiben        
+			reg_write  <= '0';         --nicht in Register schreiben			
 		when "000011" =>              -- JAL
 			alu_op 	  <= "01";
 			reg_dst    <= '0';         --nicht in rd schreiben
 			branch     <= "10";		  	--unconditional Jump
 			alu_src    <= '0';         --Wert aus Register wird nicht bentigt
-			reg_write  <= '0';         --nicht in Register schreiben        
+			reg_write  <= '1';         --in Register schreiben  
+			pc_to_R31  <= '1';			--program counter in R[31] schreiben
 		when "000100" =>              -- BEQ
 			alu_op	  <= "01";
 			reg_dst    <= '0';         --nicht in rd schreiben

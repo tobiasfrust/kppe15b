@@ -44,7 +44,7 @@ entity idex_pipeline_reg is
            write_address_rt_in : in  STD_LOGIC_VECTOR (4 downto 0);
 			  write_address_rd_in : in  STD_LOGIC_VECTOR (4 downto 0);
 			  program_counter_in : in STD_LOGIC_VECTOR (31 downto 0);
-			  instruction_in : in STD_LOGIC_VECTOR (5 downto 0);			  
+			  instruction_in : in STD_LOGIC_VECTOR (31 downto 0);			  
 			  
 			  --in steuersignale
 			  --ex
@@ -58,6 +58,7 @@ entity idex_pipeline_reg is
 			  --wb
 			  mem_to_reg_in : in STD_LOGIC;
 			  reg_write_in : in STD_LOGIC;
+			  pc_to_R31_in : in STD_LOGIC;
 			  
 			  --out
 			  read_data1_out : out  STD_LOGIC_VECTOR (31 downto 0);
@@ -65,8 +66,8 @@ entity idex_pipeline_reg is
            sign_extended_out : out  STD_LOGIC_VECTOR (31 downto 0);
            write_address_rt_out : out  STD_LOGIC_VECTOR (4 downto 0);
 			  write_address_rd_out : out  STD_LOGIC_VECTOR (4 downto 0);
-			  program_counter_out : out STD_LOGIC_VECTOR (31 downto 0);
-			  instruction_out : out STD_LOGIC_VECTOR (5 downto 0);
+			  program_counter_out : out STD_LOGIC_VECTOR (31 downto 0) := x"00000000";
+			  instruction_out : out STD_LOGIC_VECTOR (31 downto 0);
 			  --alu_ctrl_out : out STD_LOGIC_VECTOR (5 downto 0);					--hat keinen eigenen Eingang, sondern kann immer aus den unteren 6 Bit des immediate feldes bereitgestellt werden
 			  
 			  --out steuersignale
@@ -80,7 +81,8 @@ entity idex_pipeline_reg is
 			  branch_out : out STD_LOGIC_VECTOR (1 downto 0);
 			  --wb
 			  mem_to_reg_out : out STD_LOGIC;
-			  reg_write_out : out STD_LOGIC);
+			  reg_write_out : out STD_LOGIC;
+			  pc_to_R31_out : out STD_LOGIC);
 			  
 end idex_pipeline_reg;
 
@@ -97,7 +99,7 @@ begin
 				write_address_rt_out 	<= write_address_rt_in;
 				write_address_rd_out 	<= write_address_rd_in;
 				program_counter_out 		<= program_counter_in;	
-				instruction_out 			<= instruction_in;
+				instruction_out 			<= instruction_in;				
 				
 				--steuersignale
 				if flush_in = '1' then
@@ -112,6 +114,7 @@ begin
 					--wb
 					mem_to_reg_out 			<= '0';
 					reg_write_out				<= '0';
+					pc_to_R31_out 				<= '0';
 				else
 					--ex
 					reg_dst_ctrl_out 			<= reg_dst_ctrl_in;
@@ -124,6 +127,7 @@ begin
 					--wb
 					mem_to_reg_out 			<= mem_to_reg_in;
 					reg_write_out				<= reg_write_in;
+					pc_to_R31_out 				<= pc_to_R31_in;
 				end if;
 			end if;
 		end if;

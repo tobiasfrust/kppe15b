@@ -37,6 +37,8 @@ use IEEE.NUMERIC_STD.ALL;
 entity jump_addr_calc is
     Port ( pc_inc_in : in  STD_LOGIC_VECTOR (31 downto 0);
            offset : in  STD_LOGIC_VECTOR (31 downto 0);
+			  branch_in : in std_logic_vector (1 downto 0);
+			  address_in : in STD_LOGIC_VECTOR (25 downto 0);
            pc_out : out  STD_LOGIC_VECTOR (31 downto 0));
 end jump_addr_calc;
 
@@ -45,8 +47,12 @@ architecture Behavioral of jump_addr_calc is
 begin
 	process(pc_inc_in, offset)
 	begin
-	
-		pc_out <= std_logic_vector(unsigned(offset (29 downto 0) & "00") + unsigned(pc_inc_in));
+		
+		if (branch_in="10") then			--unconditional Jump
+			pc_out <= pc_inc_in(31 downto 28) & address_in (25 downto 0) & "00";
+		else
+			pc_out <= std_logic_vector(unsigned(offset (29 downto 0) & "00") + unsigned(pc_inc_in));		--berechnung bei IMMEDIATE format
+		end if;
 	
 	end process;
 end Behavioral;

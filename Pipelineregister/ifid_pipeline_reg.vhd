@@ -40,8 +40,8 @@ entity ifid_pipeline_reg is
 			  flush_in : in STD_LOGIC;
 			  
 			  --out			  
-			  program_counter_out : out  STD_LOGIC_VECTOR (31 downto 0);
-			  instruction_out : out  STD_LOGIC_VECTOR (31 downto 0));
+			  program_counter_out : out  STD_LOGIC_VECTOR (31 downto 0) := x"00000000";
+			  instruction_out : out  STD_LOGIC_VECTOR (31 downto 0):= x"00000000");
 end ifid_pipeline_reg;
 
 architecture Behavioral of ifid_pipeline_reg is
