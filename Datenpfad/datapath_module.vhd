@@ -46,7 +46,7 @@ entity datapath_module is
 				--mem
 				mem_write_in : in STD_LOGIC;
 				mem_read_in : in STD_LOGIC;
-				branch_in : in STD_LOGIC;													--wenn brach und zero ausgang der alu beide 1 sind, wird gesprungen
+				branch_in : in STD_LOGIC_VECTOR (1 downto 0);						--wenn branch und zero ausgang der alu beide 1 sind, wird gesprungen
 				--wb
 				mem_to_reg_in : in STD_LOGIC;	
 				mem_reg_write_in : in STD_LOGIC;				
@@ -108,7 +108,7 @@ architecture Behavioral of datapath_module is
 	signal idex_alu_op_out : STD_LOGIC_VECTOR (1 downto 0);	
 	signal idex_mem_write_out : STD_LOGIC;												--mem
 	signal idex_mem_read_out : STD_LOGIC;
-	signal idex_branch_out : STD_LOGIC;	
+	signal idex_branch_out : STD_LOGIC_VECTOR (1 downto 0);	
 	signal idex_mem_to_reg_out : STD_LOGIC;											--wb
 	signal idex_reg_write_out : STD_LOGIC;
 	
@@ -136,7 +136,7 @@ architecture Behavioral of datapath_module is
 	signal exmem_reg_dst_addr_out : STD_LOGIC_VECTOR (4 downto 0);	
 	signal exmem_mem_write_out : STD_LOGIC;											--steuersignale(mem)
 	signal exmem_mem_read_out : STD_LOGIC;
-	signal exmem_branch_out : STD_LOGIC;					
+	signal exmem_branch_out : STD_LOGIC_VECTOR (1 downto 0);					
 	signal exmem_mem_to_reg_out : STD_LOGIC;											--wb
 	signal exmem_reg_write_out : STD_LOGIC;
 	
@@ -161,7 +161,8 @@ begin
 				  pipeline_en_in => pipeline_en,
 				  program_counter_out => ifid_pc_out,
 				  instruction_out => ifid_instruc_out,
-				  clk_in => clk_in);
+				  clk_in => clk_in,
+				  flush_in => '0');
 				  
 	regfile : entity work.register_file 												--regfile
    port map ( read_address1_in => ifid_instruc_out (25 downto 21),
@@ -202,6 +203,7 @@ begin
 				  --wb
 				  mem_to_reg_in => mem_to_reg_in,
 				  reg_write_in => mem_reg_write_in,
+				  flush_in => '0',
 				  
 				  --out
 				  read_data1_out => idex_read_data1_out,						
@@ -348,7 +350,7 @@ begin
 	--Instanziierung Ende			  
 	----------------------------------------------------------------------------------------------------------			  
 	instruction_out <= ifid_instruc_out;												--geht nach ifid_reg an steuerwerk
-	pc_src <= exmem_branch_out AND alu_zero_out;
+	pc_src <= alu_zero_out;	--AND exmem_branch_out					--TODO: irgendwas stimmt hier nicht############################################
 	test_write_address_in <= memwb_reg_dst_addr_out;
 	test_write_data_in    <= mem_to_reg_mux_out;
 	test_reg_write        <= memwb_reg_write_out;

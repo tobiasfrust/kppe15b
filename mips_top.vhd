@@ -70,7 +70,7 @@ architecture Behavioral of mips_top is
 	--output signale vom decoder
 	signal alu_op_control_out    :  std_logic_vector(1 downto 0);
 	signal reg_dst_control_out    : std_logic;
-	signal branch_control_out     : std_logic;
+	signal branch_control_out     : std_logic_vector(1 downto 0);
 	signal mem_read_control_out   : std_logic;
 	signal mem_to_reg_control_out : std_logic;
 	signal mem_write_control_out  : std_logic;

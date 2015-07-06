@@ -97,7 +97,7 @@ begin  -- rtl
 				alu_src    <= '1';           --shamt-Wert wird bentigt
             reg_dst    <= '1';           --in rd schreiben
             reg_write  <= '1';           --in Register schreiben
-            branch     <= '0';           --kein Sprung
+            branch     <= "01";           --kein Sprung
 				mem_to_reg <= '1';           --ALU-Ergebnis wird direkt in Register gespeichert
             
           when "000100" =>             -- SLLV
@@ -291,7 +291,7 @@ begin  -- rtl
 		when "100011" =>              -- LW
         alu_op  <= "11";
 		  reg_dst <= '0';
-        branch     <= '01';          --kein Sprung
+        branch     <= "01";          --kein Sprung
         alu_src    <= '1';          --immediate-Wert nehmen
 		  reg_write  <= '1';          --in Register schreiben
 		  mem_write  <= '0';          --es muss nicht in Speicher geschrieben werden
@@ -300,7 +300,7 @@ begin  -- rtl
 		when "101011" =>              -- SW
         alu_op  <= "11";
 		  reg_dst <= '0';
-        branch     <= '0';          --kein Sprung
+        branch     <= "01";          --kein Sprung
         alu_src    <= '1';          --immediate-Wert nehmen
 		  reg_write  <= '0';          --in Register schreiben
 		  mem_write  <= '1';          --es muss in Speicher geschrieben werden
