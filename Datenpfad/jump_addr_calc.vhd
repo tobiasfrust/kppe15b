@@ -50,8 +50,12 @@ begin
 		
 		if (branch_in="10") then			--unconditional Jump
 			pc_out <= pc_inc_in(31 downto 28) & address_in (25 downto 0) & "00";
+		elsif (branch_in="11" or branch_in="00") then
+			pc_out <= std_logic_vector(unsigned(offset (29 downto 0) & "00") + unsigned(pc_inc_in));
 		else
-			pc_out <= std_logic_vector(unsigned(offset (29 downto 0) & "00") + unsigned(pc_inc_in));		--berechnung bei IMMEDIATE format
+			pc_out <= pc_inc_in;
+		--else
+		--	pc_out <= std_logic_vector(unsigned(offset (29 downto 0) & "00") + unsigned(pc_inc_in));		--berechnung bei IMMEDIATE format
 		end if;
 	
 	end process;

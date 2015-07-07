@@ -12,7 +12,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="51" />
+   <WVObjectSize size="52" />
    <wvobject fp_name="/mips_top_tb/instruction_in" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">instruction_in[31:0]</obj_property>
       <obj_property name="ObjectShortName">instruction_in[31:0]</obj_property>
@@ -287,9 +287,9 @@
       <obj_property name="ElementShortName">reg_dst</obj_property>
       <obj_property name="ObjectShortName">reg_dst</obj_property>
    </wvobject>
-   <wvobject fp_name="/mips_top_tb/uut/decoder/branch" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">branch</obj_property>
-      <obj_property name="ObjectShortName">branch</obj_property>
+   <wvobject fp_name="/mips_top_tb/uut/decoder/branch" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">branch[1:0]</obj_property>
+      <obj_property name="ObjectShortName">branch[1:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/mips_top_tb/uut/decoder/mem_read" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">mem_read</obj_property>
@@ -425,6 +425,11 @@
    <wvobject fp_name="/mips_top_tb/uut/datapath/mem_to_reg_mux/y" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">y[31:0]</obj_property>
       <obj_property name="ObjectShortName">y[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_top_tb/jump_addr_out" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">jump_addr_out[31:0]</obj_property>
+      <obj_property name="ObjectShortName">jump_addr_out[31:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
    </wvobject>
 </wave_config>

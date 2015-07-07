@@ -282,6 +282,7 @@ BEGIN
 		immediate	:= x"FFFF";
 		
 		instruction_in <= opcode & rs & rt & immediate;	
+		
 		wait until rising_edge(clk_in);
 --		--#############################################
 --		--# SLL Test 2 Takt 11
@@ -704,7 +705,7 @@ BEGIN
 		opcode		:= "000010";			--jump
 		address 	   := "11" & x"beeeef";	--jump offset
 
-		pc_inc_in 	<= x"11111111";		--basis für jump
+		pc_inc_in 	<= x"11111111";		--basis fr jump
 
 		instruction_in <= opcode & address;
 
@@ -716,7 +717,7 @@ BEGIN
 		opcode		:= "000011";			--JAL
 		address 	   := "11" & x"beeeef";	--jump offset
 
-		pc_inc_in 	<= x"11111111";		--basis für jump
+		pc_inc_in 	<= x"11111111";		--basis fr jump
 
 		instruction_in <= opcode & address;
 		
@@ -726,28 +727,86 @@ BEGIN
 		wait until rising_edge(clk_in);
 		instruction_in <= x"00000000";
 
-		--ASSERT für jump befehl
+		--ASSERT fr jump befehl
 		wait for 2 ns;
-		assert pc_src = '1' report "jump test failed: falsche quelle für pc gewählt" severity error;		
+		assert pc_src = '1' report "jump test failed: falsche quelle fr pc gewhlt" severity error;		
 		assert jump_addr_out = "0001" & "11" & x"beeeef" & "00" report "jump test failed: zu falscher addresse gesprungen" severity error;
 
 		wait until rising_edge(clk_in);
 		instruction_in <= x"00000000";
 		
-		--ASSERT für JAL befehl
+		--ASSERT fr JAL befehl
 		wait for 2 ns;		
-		assert pc_src = '1' report "JAL test failed: falsche quelle für pc gewählt" severity error;		
+		assert pc_src = '1' report "JAL test failed: falsche quelle fr pc gewhlt" severity error;		
 		assert jump_addr_out = "0001" & "11" & x"beeeef" & "00" report "JAL test failed: zu falscher addresse gesprungen" severity error;
 		
 		wait until rising_edge(clk_in);
 		
-		--ASSERT für JAL befehl(WB läuft erst später aus)
+		--ASSERT fr JAL befehl(WB luft erst spter aus)
 		wait for 2 ns;	
 		assert test_write_address_in = "11111" report "JAL test failed: Adresse falsch angelegt! " severity error;
 		assert test_write_data_in = x"11111115" report "JAL test failed: Falschen PC reingeschrieben! " severity error;
 		assert test_reg_write = '1' report "JAL test failed:Wert wird nicht in Register geschrieben!" severity error;
 		
 		wait until rising_edge(clk_in);
+		
+		--#############################################
+		--# Branch tests
+		--#############################################	
+		
+		--#############################################
+		--# Branch on equal beq =
+		--#############################################
+		opcode		:= "000100";			--beq
+		rs 	      := "00001";	         
+		rt          := "00001";
+		immediate   := x"0004";      --offset
+ 
+		pc_inc_in 	<= x"00000000";		--basis fr jump
+
+		instruction_in <= opcode & rs & rt & immediate;		
+		
+		wait until rising_edge(clk_in);
+		instruction_in <= x"00000000";
+		wait until rising_edge(clk_in);
+		instruction_in <= x"00000000";
+		wait until rising_edge(clk_in);
+		instruction_in <= x"00000000";
+		--ASSERT fr beq befehl
+		wait for 2 ns;
+		assert pc_src = '1' report "beq = test failed: falsche quelle fr pc gewhlt" severity error;		
+		assert jump_addr_out = x"00000010" report "beq test failed: zu falscher addresse gesprungen" severity error;
+		wait until rising_edge(clk_in);
+		instruction_in <= x"00000000";
+		wait until rising_edge(clk_in);
+		instruction_in <= x"00000000";
+		
+		--#############################################
+		--# Branch on  equal beq !=
+		--#############################################
+		opcode		:= "000100";			--beq
+		rs 	      := "00001";	         
+		rt          := "00010";
+		immediate   := x"0004";      --offset
+ 
+		pc_inc_in 	<= x"00000000";		--basis fr jump
+
+		instruction_in <= opcode & rs & rt & immediate;		
+		
+		wait until rising_edge(clk_in);
+		instruction_in <= x"00000000";
+		wait until rising_edge(clk_in);
+		instruction_in <= x"00000000";
+		wait until rising_edge(clk_in);
+		instruction_in <= x"00000000";
+		--ASSERT fr beq befehl
+		wait for 2 ns;
+		assert pc_src = '0' report "beq != test failed: falsche quelle fr pc gewhlt" severity error;		
+		assert jump_addr_out = x"00000004" report "beq test failed: zu falscher addresse gesprungen" severity error;
+		wait until rising_edge(clk_in);
+		instruction_in <= x"00000000";
+		wait until rising_edge(clk_in);
+		instruction_in <= x"00000000";
 		
 		wait;
    end process;
