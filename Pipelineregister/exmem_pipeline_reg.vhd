@@ -40,15 +40,17 @@ entity exmem_pipeline_reg is
            alu_result_in : in  STD_LOGIC_VECTOR (31 downto 0);
            write_data_in : in  STD_LOGIC_VECTOR (31 downto 0);
            reg_dst_addr_in : in  STD_LOGIC_VECTOR (4 downto 0);
+			  program_counter_in : in STD_LOGIC_VECTOR (31 downto 0);
 			  
 			  --steuersignale
 			  --mem
            mem_write_in : in  STD_LOGIC;
            mem_read_in : in  STD_LOGIC;
-           branch_in : in  STD_LOGIC;
+           branch_in : in STD_LOGIC_VECTOR (1 downto 0);			-- 00: bne		11: beq		01: kein Sprun		10: normaler (unconditional) Jump
 			  --wb
            mem_to_reg_in : in  STD_LOGIC;
 			  reg_write_in : in STD_LOGIC;
+			  pc_to_R31_in : in STD_LOGIC;
 			  
 			  --out
            jump_addr_out : out  STD_LOGIC_VECTOR (31 downto 0);
@@ -56,15 +58,17 @@ entity exmem_pipeline_reg is
            alu_result_out : out  STD_LOGIC_VECTOR (31 downto 0);
            write_data_out : out  STD_LOGIC_VECTOR (31 downto 0);
            reg_dst_addr_out : out  STD_LOGIC_VECTOR (4 downto 0);
+			  program_counter_out : out STD_LOGIC_VECTOR (31 downto 0);
 			  
 			  --steuersignale
 			  --mem
            mem_write_out : out  STD_LOGIC;
            mem_read_out : out  STD_LOGIC;
-           branch_out : out  STD_LOGIC;
+           branch_out : out  STD_LOGIC_VECTOR (1 downto 0);
 			  --wb
            mem_to_reg_out : out  STD_LOGIC;
-			  reg_write_out : out STD_LOGIC);
+			  reg_write_out : out STD_LOGIC;
+			  pc_to_R31_out : out STD_LOGIC);
 end exmem_pipeline_reg;
 
 architecture Behavioral of exmem_pipeline_reg is
@@ -86,6 +90,8 @@ begin
 			  branch_out 			<= branch_in;
 			  mem_to_reg_out 		<= mem_to_reg_in;
 			  reg_write_out		<= reg_write_in;
+			  program_counter_out <= program_counter_in;
+			  pc_to_R31_out 		<= pc_to_R31_in;
 			end if;
 		end if;
 	

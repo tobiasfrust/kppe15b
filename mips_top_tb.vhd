@@ -46,6 +46,7 @@ ARCHITECTURE behavior OF mips_top_tb IS
          rst_in : IN  std_logic;
          pc_inc_in : IN  std_logic_vector(31 downto 0);
          pc_src : OUT  std_logic;
+			jump_addr_out : OUT std_logic_vector(31 downto 0);
          wb_dat_in : IN  std_logic_vector(31 downto 0);
          wb_ack_in : IN  std_logic;
          wb_adr_out : OUT  std_logic_vector(31 downto 0);
@@ -73,6 +74,7 @@ ARCHITECTURE behavior OF mips_top_tb IS
 
  	--Outputs
    signal pc_src : std_logic;
+	signal jump_addr_out : std_logic_vector (31 downto 0);
    signal wb_adr_out : std_logic_vector(31 downto 0);
    signal wb_dat_out : std_logic_vector(31 downto 0);
    signal wb_we_out : std_logic;
@@ -99,6 +101,7 @@ BEGIN
           rst_in => rst_in,
           pc_inc_in => pc_inc_in,
           pc_src => pc_src,
+			 jump_addr_out => jump_addr_out,
           wb_dat_in => wb_dat_in,
           wb_ack_in => wb_ack_in,
           wb_adr_out => wb_adr_out,
@@ -257,7 +260,7 @@ BEGIN
 		--#############################################
 		--# XORI Test 1 Takt 9
 		--#############################################
-		opcode		:= "001110";			--ori
+		opcode		:= "001110";			--xori
 		rs 			:= "00001";				--operand 1
 		rt				:= "01001";				--soll in register 9
 		immediate	:= x"0000";
@@ -273,44 +276,48 @@ BEGIN
 		--#############################################
 		--# XORI Test 2 Takt 10
 		--#############################################
-		opcode		:= "001110";			--ori
+		opcode		:= "001110";			--xori
 		rs 			:= "00001";				--operand 1
 		rt				:= "01010";				--soll in register 10
 		immediate	:= x"FFFF";
 		
 		instruction_in <= opcode & rs & rt & immediate;	
 		wait until rising_edge(clk_in);
-		--#############################################
-		--# SLL Test 2 Takt 11
-		--#############################################
-		opcode		:= "000000";			--ori
-		rs 			:= "00000";				--operand 1
-		rt				:= "00001";				
-		rd          := "01011";
-		shamt       := "00001";
-		funct       := "000000";
-		
-		instruction_in <= opcode & rs & rt & rd &shamt & funct;	
-		wait until rising_edge(clk_in);
+--		--#############################################
+--		--# SLL Test 2 Takt 11
+--		--#############################################
+--		opcode		:= "000000";			--ori
+--		rs 			:= "00000";				--operand 1
+--		rt				:= "00001";				
+--		rd          := "01011";
+--		shamt       := "00001";
+--		funct       := "000000";
+--		
+--		instruction_in <= opcode & rs & rt & rd &shamt & funct;	
+--		wait until rising_edge(clk_in);
 --		--#############################################
 --		--# load upper immediate test
 --		--#############################################
---		opcode		:= "001111";			--lui
---		rs 			:= "00000";				--nicht genutzt
---		rt				:= "00001";				--soll in register 1
---		immediate	:= x"ABCD";
---		
---		instruction_in <= opcode & rs & rt & immediate;	
+		opcode		:= "001111";			--lui
+		rs 			:= "00000";				--nicht genutzt
+		rt				:= "11110";				--soll in register 1
+		immediate	:= x"ABCD";
+		
+		instruction_in <= opcode & rs & rt & immediate;
 --		
 		--4 mal nop ()
-		wait for 10 ns;
+		wait until rising_edge(clk_in);
 		instruction_in <= x"00000000";
-		wait for 10 ns;
+		wait until rising_edge(clk_in);
 		instruction_in <= x"00000000";
-		wait for 10 ns;
+		wait until rising_edge(clk_in);
 		instruction_in <= x"00000000";
-		wait for 10 ns;
+		wait until rising_edge(clk_in);
 		instruction_in <= x"00000000";
+		wait for 2 ns;
+		assert test_write_address_in = "11110" report "Adresse falsch angelegt!, LUI" severity error;
+		assert test_write_data_in = (x"abcd0000") report "Falsches Datum berechnet!, LUI" severity error;
+		assert test_reg_write = '1' report "Wert wird nicht in Register geschrieben!, LUI" severity error;
 		
 -- 	 ___     ___       __     _    _     
 -- 	| _ \___| _ ) ___ / _|___| |_ | |___ 
@@ -608,7 +615,141 @@ BEGIN
 		
 		wait until rising_edge(clk_in);
 		
-      wait;
+--	 _    ___   _   ___   _____ _____ ___  ___ ___         ___       __     _    _     
+-- | |  / _ \ /_\ |   \ / / __|_   _/ _ \| _ \ __|  ___  | _ ) ___ / _|___| |_ | |___ 
+-- | |_| (_) / _ \| |) / /\__ \ | || (_) |   / _|  |___| | _ \/ -_)  _/ -_) ' \| / -_)
+-- |____\___/_/ \_\___/_/ |___/ |_| \___/|_|_\___|       |___/\___|_| \___|_||_|_\___|
+      --#############################################
+		--# LW Test Takt XXX
+		--#############################################                                                                              
+		opcode		:= "100011";			--LW
+		rs 			:= "00000";				--operand 1
+		rt				:= "00010";				--soll in register 2
+		immediate	:= x"E0FD";
+		
+		instruction_in <= opcode & rs & rt & immediate;	
+		
+		--4x nop
+		wait until rising_edge(clk_in);		
+		instruction_in <= x"00000000";
+		wait until rising_edge(clk_in);
+		instruction_in <= x"00000000";
+		wait until rising_edge(clk_in);
+		instruction_in <= x"00000000";
+		wait until rising_edge(clk_in);
+		instruction_in <= x"00000000";
+		wb_ack_in <= '1';
+		wb_dat_in <= x"deadbeef";
+		
+		wait until rising_edge(clk_in);
+		wb_ack_in <= '0';
+		instruction_in <= x"00000000";		
+		
+		wait for 2 ns;
+		assert test_write_address_in = "00010" report "Adresse falsch angelegt!, LW" severity error;
+		assert test_write_data_in = (x"deadbeef") report "Falsches Datum berechnet!, LW" severity error;
+		assert test_reg_write = '1' report "Wert wird nicht in Register geschrieben!, LW" severity error;
+		
+		wait until rising_edge(clk_in);
+		
+		--#############################################
+		--# SW Test Takt XXX
+		--#############################################                                                                              
+		opcode		:= "101011";			--SW
+		rs 			:= "00000";				--operand 1
+		rt				:= "00010";				--wert aus rt wird in speicher geschrieben
+		immediate	:= x"ABCD";
+		
+		instruction_in <= opcode & rs & rt & immediate;
+		
+		--4x nop
+		wait until rising_edge(clk_in);		
+		instruction_in <= x"00000000";
+		wait until rising_edge(clk_in);
+		instruction_in <= x"00000000";
+		wait until rising_edge(clk_in);
+		instruction_in <= x"00000000";
+		
+		wait for 2 ns;
+		
+		assert wb_adr_out 	= x"FFFFABCD" 				report "write test failed1" severity error;
+		assert wb_dat_out 	= x"deadbeef"				report "write test failed2" severity error;
+		
+		wait until rising_edge(clk_in);
+		instruction_in <= x"00000000";
+		wb_ack_in <= '1';     
+		
+		wait for 2 ns;
+		assert test_reg_write = '0' report "Es wird in Register geschrieben!, SW" severity error;
+		
+		wait until rising_edge(clk_in);
+		instruction_in <= x"00000000";
+		wb_ack_in <= '0';
+		
+		wait until rising_edge(clk_in);		
+		instruction_in <= x"00000000";
+		wait until rising_edge(clk_in);
+		instruction_in <= x"00000000";
+		wait until rising_edge(clk_in);
+		instruction_in <= x"00000000";
+		
+		--     _                     ___       __     _    _     
+		--  _ | |_  _ _ __  _ __ ___| _ ) ___ / _|___| |_ | |___ 
+		-- | || | || | '  \| '_ \___| _ \/ -_)  _/ -_) ' \| / -_)
+		--  \__/ \_,_|_|_|_| .__/   |___/\___|_| \___|_||_|_\___|
+		--                 |_|                                                                                             
+		--#############################################
+		--# Jump test
+		--#############################################                                                                              
+		opcode		:= "000010";			--jump
+		address 	   := "11" & x"beeeef";	--jump offset
+
+		pc_inc_in 	<= x"11111111";		--basis für jump
+
+		instruction_in <= opcode & address;
+
+		wait until rising_edge(clk_in);
+		
+		--#############################################
+		--# Jump and Link test
+		--#############################################		
+		opcode		:= "000011";			--JAL
+		address 	   := "11" & x"beeeef";	--jump offset
+
+		pc_inc_in 	<= x"11111111";		--basis für jump
+
+		instruction_in <= opcode & address;
+		
+		
+		wait until rising_edge(clk_in);
+		instruction_in <= x"00000000";
+		wait until rising_edge(clk_in);
+		instruction_in <= x"00000000";
+
+		--ASSERT für jump befehl
+		wait for 2 ns;
+		assert pc_src = '1' report "jump test failed: falsche quelle für pc gewählt" severity error;		
+		assert jump_addr_out = "0001" & "11" & x"beeeef" & "00" report "jump test failed: zu falscher addresse gesprungen" severity error;
+
+		wait until rising_edge(clk_in);
+		instruction_in <= x"00000000";
+		
+		--ASSERT für JAL befehl
+		wait for 2 ns;		
+		assert pc_src = '1' report "JAL test failed: falsche quelle für pc gewählt" severity error;		
+		assert jump_addr_out = "0001" & "11" & x"beeeef" & "00" report "JAL test failed: zu falscher addresse gesprungen" severity error;
+		
+		wait until rising_edge(clk_in);
+		
+		--ASSERT für JAL befehl(WB läuft erst später aus)
+		wait for 2 ns;	
+		assert test_write_address_in = "11111" report "JAL test failed: Adresse falsch angelegt! " severity error;
+		assert test_write_data_in = x"11111115" report "JAL test failed: Falschen PC reingeschrieben! " severity error;
+		assert test_reg_write = '1' report "JAL test failed:Wert wird nicht in Register geschrieben!" severity error;
+		
+		wait until rising_edge(clk_in);
+		
+		wait;
    end process;
 
 END;

@@ -39,14 +39,19 @@ entity memwb_pipeline_reg is
            alu_result_in : in  STD_LOGIC_VECTOR (31 downto 0);
            reg_dst_addr_in : in  STD_LOGIC_VECTOR (4 downto 0);
            mem_to_reg_in : in  STD_LOGIC;
-			  reg_write_in : in  STD_LOGIC;
+			  reg_write_in : in  STD_LOGIC;			  
+			  program_counter_in : in STD_LOGIC_VECTOR (31 downto 0);
+			  pc_to_R31_in : in STD_LOGIC;
 			  
 			  --out
            read_data_out : out  STD_LOGIC_VECTOR (31 downto 0);
            alu_result_out : out  STD_LOGIC_VECTOR (31 downto 0);
            reg_dst_addr_out : out  STD_LOGIC_VECTOR (4 downto 0);
            mem_to_reg_out : out  STD_LOGIC;			  
-			  reg_write_out : out  STD_LOGIC);
+			  reg_write_out : out  STD_LOGIC;			  
+			  program_counter_out : out STD_LOGIC_VECTOR (31 downto 0);
+			  pc_to_R31_out : out STD_LOGIC);
+			  
 end memwb_pipeline_reg;
 
 architecture Behavioral of memwb_pipeline_reg is
@@ -62,6 +67,8 @@ begin
 			  reg_dst_addr_out 	<= reg_dst_addr_in; 
 			  mem_to_reg_out 		<= mem_to_reg_in;
 			  reg_write_out 		<= reg_write_in;
+			  program_counter_out <= program_counter_in;
+			  pc_to_R31_out 		<= pc_to_R31_in;
 			 end if;
 		end if;
 	

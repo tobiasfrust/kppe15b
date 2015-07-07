@@ -36,11 +36,13 @@ entity mips_top is
 			instruction_in 	  	: in STD_LOGIC_VECTOR (31 downto 0);
 			clk_in            	: in std_logic;
 			rst_in            	: in std_logic;
-			pc_inc_in         	: in STD_LOGIC_VECTOR (31 downto 0);				--!!!hier ungenutzt!!!
+			pc_inc_in         	: in STD_LOGIC_VECTOR (31 downto 0);				--!!!hier noch ungenutzt!!!
 				  
 			--out					   		
-			pc_src 		   	: out STD_LOGIC;			--ausgang fr den muxer vor dem program counter, der bei sprung die quelle auswhlt
-																										--!!!hier ungenutzt!!!
+			pc_src 		   	: out STD_LOGIC;												--ausgang fr den muxer vor dem program counter, der bei sprung die quelle auswhlt
+																										--!!!hier noch ungenutzt!!!
+			jump_addr_out 		: out STD_LOGIC_VECTOR (31 downto 0);						--berechnete Sprungzieladresse				
+							
 			--############################################
 			--#	wishbone signale
 			--############################################				
@@ -70,16 +72,16 @@ architecture Behavioral of mips_top is
 	--output signale vom decoder
 	signal alu_op_control_out    :  std_logic_vector(1 downto 0);
 	signal reg_dst_control_out    : std_logic;
-	signal branch_control_out     : std_logic;
+	signal branch_control_out     : std_logic_vector(1 downto 0);
 	signal mem_read_control_out   : std_logic;
 	signal mem_to_reg_control_out : std_logic;
 	signal mem_write_control_out  : std_logic;
 	signal alu_src_control_out    : std_logic;
 	signal reg_write_control_out  : std_logic;
+	signal pc_to_R31_control_out  : std_logic;
 	
 	--output signale vom datenpfad
 	signal delayed_instruction_datapath_out : STD_LOGIC_VECTOR (31 downto 0);
-	signal pc_src_datapath_out					 : std_logic;
 
 begin
 	decoder : entity work.mips_decoder
@@ -91,7 +93,8 @@ begin
 				 mem_to_reg     => mem_to_reg_control_out,
 				 mem_write      => mem_write_control_out,
 				 alu_src        => alu_src_control_out,
-				 reg_write      => reg_write_control_out
+				 reg_write      => reg_write_control_out,
+				 pc_to_R31		 => pc_to_R31_control_out
 				 );
 				 
 	datapath : entity work.datapath_module
@@ -108,14 +111,16 @@ begin
 					branch_in					=>	branch_control_out,
 					mem_to_reg_in				=>	mem_to_reg_control_out,
 					mem_reg_write_in			=>	reg_write_control_out,
+					pc_to_R31_in				=> pc_to_R31_control_out,
 					wb_dat_in					=> wb_dat_in,
 					wb_ack_in					=> wb_ack_in,
 				 
 					--out
 					instruction_out 			=> delayed_instruction_datapath_out,	--befehl, der ans Steuerwerk geht. Er geht nicht direkt ans Steuerwerk, weil er erst durch 
 																										--ein pipelineregister muss. (wie es im Buch eingezeichnet ist)
-					pc_src 						=> pc_src_datapath_out,						--ausgang fr den muxer vor dem program counter, der bei sprung die quelle auswhlt
+					pc_src 						=> pc_src,										--ausgang fr den muxer vor dem program counter, der bei sprung die quelle auswhlt
 																										--!!!hier ungenutzt!!!
+					jump_addr_out				=> jump_addr_out,
 																									
 					wb_adr_out 					=>	wb_adr_out,
 					wb_dat_out 					=>	wb_dat_out,

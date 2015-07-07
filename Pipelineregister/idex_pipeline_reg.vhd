@@ -36,6 +36,7 @@ entity idex_pipeline_reg is
     Port ( --in steuerung
 				pipeline_en_in : in STD_LOGIC;
 				clk_in : in STD_LOGIC;
+				flush_in : in STD_LOGIC;
 			  --in
 			  read_data1_in : in  STD_LOGIC_VECTOR (31 downto 0);
            read_data2_in : in  STD_LOGIC_VECTOR (31 downto 0);
@@ -43,20 +44,21 @@ entity idex_pipeline_reg is
            write_address_rt_in : in  STD_LOGIC_VECTOR (4 downto 0);
 			  write_address_rd_in : in  STD_LOGIC_VECTOR (4 downto 0);
 			  program_counter_in : in STD_LOGIC_VECTOR (31 downto 0);
-			  instruction_in : in STD_LOGIC_VECTOR (5 downto 0);			  
+			  instruction_in : in STD_LOGIC_VECTOR (31 downto 0);			  
 			  
 			  --in steuersignale
 			  --ex
-			  reg_dst_ctrl_in : in STD_LOGIC;											--entscheided, ob rd oder rt feld als write addr fr des regfile genutzt wird											
+			  reg_dst_ctrl_in : in STD_LOGIC;											-- entscheided, ob rd oder rt feld als write addr fr des regfile genutzt wird											
 			  alu_src_in : in STD_LOGIC;
 			  alu_op_in : in STD_LOGIC_VECTOR (1 downto 0);
 			  --mem
 			  mem_write_in : in STD_LOGIC;
 			  mem_read_in : in STD_LOGIC;
-			  branch_in : in STD_LOGIC;													--wenn branch und zero ausgang der alu beide 1 sind, wird gesprungen
+			  branch_in : in STD_LOGIC_VECTOR (1 downto 0);							-- 00: bne		11: beq		01: kein Sprun		10: normaler (unconditional) Jump
 			  --wb
 			  mem_to_reg_in : in STD_LOGIC;
 			  reg_write_in : in STD_LOGIC;
+			  pc_to_R31_in : in STD_LOGIC;
 			  
 			  --out
 			  read_data1_out : out  STD_LOGIC_VECTOR (31 downto 0);
@@ -64,8 +66,8 @@ entity idex_pipeline_reg is
            sign_extended_out : out  STD_LOGIC_VECTOR (31 downto 0);
            write_address_rt_out : out  STD_LOGIC_VECTOR (4 downto 0);
 			  write_address_rd_out : out  STD_LOGIC_VECTOR (4 downto 0);
-			  program_counter_out : out STD_LOGIC_VECTOR (31 downto 0);
-			  instruction_out : out STD_LOGIC_VECTOR (5 downto 0);
+			  program_counter_out : out STD_LOGIC_VECTOR (31 downto 0) := x"00000000";
+			  instruction_out : out STD_LOGIC_VECTOR (31 downto 0);
 			  --alu_ctrl_out : out STD_LOGIC_VECTOR (5 downto 0);					--hat keinen eigenen Eingang, sondern kann immer aus den unteren 6 Bit des immediate feldes bereitgestellt werden
 			  
 			  --out steuersignale
@@ -76,10 +78,11 @@ entity idex_pipeline_reg is
 			  --mem
 			  mem_write_out : out STD_LOGIC;
 			  mem_read_out : out STD_LOGIC;
-			  branch_out : out STD_LOGIC;
+			  branch_out : out STD_LOGIC_VECTOR (1 downto 0);
 			  --wb
 			  mem_to_reg_out : out STD_LOGIC;
-			  reg_write_out : out STD_LOGIC);
+			  reg_write_out : out STD_LOGIC;
+			  pc_to_R31_out : out STD_LOGIC);
 			  
 end idex_pipeline_reg;
 
@@ -96,20 +99,36 @@ begin
 				write_address_rt_out 	<= write_address_rt_in;
 				write_address_rd_out 	<= write_address_rd_in;
 				program_counter_out 		<= program_counter_in;	
-				instruction_out 			<= instruction_in;
+				instruction_out 			<= instruction_in;				
 				
 				--steuersignale
-				--ex
-				reg_dst_ctrl_out 			<= reg_dst_ctrl_in;
-				alu_src_out 				<= alu_src_in;
-				alu_op_out 					<= alu_op_in;
-				--mem
-				mem_write_out 				<= mem_write_in;
-				mem_read_out 				<= mem_read_in;
-				branch_out 					<= branch_in;
-				--wb
-				mem_to_reg_out 			<= mem_to_reg_in;
-				reg_write_out				<= reg_write_in;
+				if flush_in = '1' then
+					--ex
+					reg_dst_ctrl_out 			<= '0';
+					alu_src_out 				<= '0';
+					alu_op_out 					<= (others => '0');
+					--mem
+					mem_write_out 				<= '0';
+					mem_read_out 				<= '0';
+					branch_out 					<= "00";
+					--wb
+					mem_to_reg_out 			<= '0';
+					reg_write_out				<= '0';
+					pc_to_R31_out 				<= '0';
+				else
+					--ex
+					reg_dst_ctrl_out 			<= reg_dst_ctrl_in;
+					alu_src_out 				<= alu_src_in;
+					alu_op_out 					<= alu_op_in;
+					--mem
+					mem_write_out 				<= mem_write_in;
+					mem_read_out 				<= mem_read_in;
+					branch_out 					<= branch_in;
+					--wb
+					mem_to_reg_out 			<= mem_to_reg_in;
+					reg_write_out				<= reg_write_in;
+					pc_to_R31_out 				<= pc_to_R31_in;
+				end if;
 			end if;
 		end if;
 	end process;

@@ -3,7 +3,7 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="C:/Users/Alex/Xilinx/SysGen/14.7/MIPS/mips_top_tb_isim_beh.wdb" id="1" type="auto">
+      <db_ref path="/home/kppe15b/MIPS_kppe15b/mips_top_tb_isim_beh.wdb" id="1" type="auto">
          <top_modules>
             <top_module name="mips" />
             <top_module name="mips_top_tb" />
@@ -79,6 +79,135 @@
    <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">registers[31:0]</obj_property>
       <obj_property name="ObjectShortName">registers[31:0]</obj_property>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[31]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[31]</obj_property>
+         <obj_property name="ObjectShortName">registers[31]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[30]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[30]</obj_property>
+         <obj_property name="ObjectShortName">registers[30]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[29]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[29]</obj_property>
+         <obj_property name="ObjectShortName">registers[29]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[28]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[28]</obj_property>
+         <obj_property name="ObjectShortName">registers[28]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[27]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[27]</obj_property>
+         <obj_property name="ObjectShortName">registers[27]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[26]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[26]</obj_property>
+         <obj_property name="ObjectShortName">registers[26]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[25]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[25]</obj_property>
+         <obj_property name="ObjectShortName">registers[25]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[24]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[24]</obj_property>
+         <obj_property name="ObjectShortName">registers[24]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[23]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[23]</obj_property>
+         <obj_property name="ObjectShortName">registers[23]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[22]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[22]</obj_property>
+         <obj_property name="ObjectShortName">registers[22]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[21]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[21]</obj_property>
+         <obj_property name="ObjectShortName">registers[21]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[20]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[20]</obj_property>
+         <obj_property name="ObjectShortName">registers[20]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[19]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[19]</obj_property>
+         <obj_property name="ObjectShortName">registers[19]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[18]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[18]</obj_property>
+         <obj_property name="ObjectShortName">registers[18]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[17]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[17]</obj_property>
+         <obj_property name="ObjectShortName">registers[17]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[16]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[16]</obj_property>
+         <obj_property name="ObjectShortName">registers[16]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[15]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[15]</obj_property>
+         <obj_property name="ObjectShortName">registers[15]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[14]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[14]</obj_property>
+         <obj_property name="ObjectShortName">registers[14]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[13]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[13]</obj_property>
+         <obj_property name="ObjectShortName">registers[13]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[12]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[12]</obj_property>
+         <obj_property name="ObjectShortName">registers[12]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[11]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[11]</obj_property>
+         <obj_property name="ObjectShortName">registers[11]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[10]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[10]</obj_property>
+         <obj_property name="ObjectShortName">registers[10]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[9]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[9]</obj_property>
+         <obj_property name="ObjectShortName">registers[9]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[8]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[8]</obj_property>
+         <obj_property name="ObjectShortName">registers[8]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[7]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[7]</obj_property>
+         <obj_property name="ObjectShortName">registers[7]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[6]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[6]</obj_property>
+         <obj_property name="ObjectShortName">registers[6]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[5]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[5]</obj_property>
+         <obj_property name="ObjectShortName">registers[5]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[4]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[4]</obj_property>
+         <obj_property name="ObjectShortName">registers[4]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[3]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[3]</obj_property>
+         <obj_property name="ObjectShortName">registers[3]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[2]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[2]</obj_property>
+         <obj_property name="ObjectShortName">registers[2]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[1]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[1]</obj_property>
+         <obj_property name="ObjectShortName">registers[1]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/mips_top_tb/uut/datapath/regfile/registers[0]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[0]</obj_property>
+         <obj_property name="ObjectShortName">registers[0]</obj_property>
+      </wvobject>
    </wvobject>
    <wvobject fp_name="/mips_top_tb/clk_in_period" type="other" db_ref_id="1">
       <obj_property name="ElementShortName">clk_in_period</obj_property>
